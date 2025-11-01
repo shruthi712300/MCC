@@ -1,0 +1,3192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaysian Ceylonese Congress</title>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #e9ecef;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --accent: #007bff;
+            --accent-hover: #0056b3;
+            --success: #28a745;
+            --warning: #ffc107;
+            --error: #dc3545;
+            --sidebar-width: 250px;
+            --header-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--bg-primary);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+       
+        .logo {
+            max-width: 30px;
+            height: auto;
+            display: block;
+        }
+
+        .logo-section {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .user-welcome {
+            color: var(--text-secondary);
+            margin-right: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--text-secondary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .btn-danger {
+            background-color: var(--error);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: var(--header-height);
+            width: var(--sidebar-width);
+            height: calc(100vh - var(--header-height));
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--bg-tertiary);
+            padding: 2rem 1rem;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 99;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--accent);
+        }
+
+        .sidebar-menu a.active {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .menu-icon {
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        /* Main Content with Sidebar */
+        .main-content {
+            transition: margin-left 0.3s ease;
+            min-height: calc(100vh - var(--header-height));
+        }
+
+        .main-content.with-sidebar {
+            margin-left: var(--sidebar-width);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Community Posts */
+        .community-section {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .posts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .post-card {
+            background-color: var(--bg-primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .post-meta h3 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+            color: var(--text-primary);
+        }
+
+        .post-meta span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .post-content {
+            margin-bottom: 1rem;
+        }
+
+        .post-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background-color: var(--bg-tertiary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        /* Create Post Section */
+        .create-post {
+            background-color: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .create-post h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .tags-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag-preview {
+            background-color: var(--accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tag-preview .remove-tag {
+            cursor: pointer;
+            font-weight: bold;
+            padding: 0.1rem;
+        }
+
+        /* Auth Pages */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 2rem 0;
+        }
+
+        .auth-form {
+            background-color: var(--bg-primary);
+            padding: 2.5rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .auth-form h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            font-size: 1.8rem;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .form-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .message.success {
+            background-color: rgba(40, 167, 69, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .message.error {
+            background-color: rgba(220, 53, 69, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+
+        .message.info {
+            background-color: rgba(0, 123, 255, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+
+        /* Dashboard Stats */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--accent), #0056b3);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+        }
+                /* Logo Management Styles */
+        .logo-upload-section {
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .logo-upload-section h4 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .logo-preview {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .logo-preview img {
+            max-height: 80px;
+            max-width: 250px;
+            height: auto;
+            width: auto;
+            object-fit: contain;
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 6px;
+            padding: 5px;
+            background: white;
+        }
+
+        .logo-history {
+            margin-top: 1.5rem;
+        }
+
+        .logo-history-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            background: white;
+        }
+
+        .logo-history-item.active {
+            border-color: var(--accent);
+            background-color: rgba(0, 123, 255, 0.05);
+        }
+
+        .logo-history-item img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-history-info {
+            flex: 1;
+        }
+
+        .logo-history-info h5 {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .logo-history-info p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .logo-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-secondary);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid var(--bg-tertiary);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--bg-tertiary);
+            color: var(--text-secondary);
+        }
+
+        /* Hidden class for page navigation */
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            background-color: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            margin-right: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .profile-info h2 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .profile-info p {
+            color: var(--text-secondary);
+        }
+
+        /* Membership Status Styles */
+        .bg-warning {
+            background-color: #ffc107 !important;
+            color: #212529;
+        }
+
+        .bg-success {
+            background-color: #28a745 !important;
+            color: white;
+        }
+
+        .bg-danger {
+            background-color: #dc3545 !important;
+            color: white;
+        }
+
+        .bg-secondary {
+            background-color: #6c757d !important;
+            color: white;
+        }
+
+        .tag {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 12px;
+            margin: 2px;
+        }
+
+        .applications-table {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        .applications-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .applications-table th,
+        .applications-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .applications-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .mt-3 {
+            margin-top: 1rem;
+        }
+
+        /* Branch Management Styles */
+        .branch-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .branch-stat-card {
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .branch-stat-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .branch-stat-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        /* Gallery Styles */
+        .gallery-section {
+            margin-top: 2rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .gallery-image-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.8) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-info {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .gallery-info h4 {
+            margin: 0 0 5px 0;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .gallery-info p {
+            margin: 2px 0;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .gallery-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .media-upload-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .media-upload-item {
+            padding: 1rem;
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 6px;
+            background: var(--bg-secondary);
+        }
+
+        .media-upload-item label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .media-upload-item small {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+            }
+            
+            .gallery-image-container {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .sidebar {
+                width: 280px;
+            }
+
+            .main-content.with-sidebar {
+                margin-left: 0;
+            }
+
+            .posts-container {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .auth-form {
+                margin: 1rem;
+                padding: 2rem;
+            }
+
+            .branch-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 2rem 0;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            /* Logo Styles */
+            .logo-section {
+                display: flex;
+                align-items: center;
+                padding: 10px 0;
+            }
+
+            #site-logo {
+                max-height: 80px;
+                max-width: 200px;
+                height: auto;
+                width: auto;
+                object-fit: contain;
+            }
+
+            .header-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 20px;
+                background-color: #f8f9fa;
+                border-bottom: 1px solid #dee2e6;
+            }
+
+            /* Logo upload form */
+            #logo-upload-form {
+                margin: 10px 0;
+                padding: 15px;
+                background: #f8f9fa;
+                border-radius: 5px;
+            }
+
+            #logo-upload-form input[type="file"] {
+                margin-right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <button class="menu-toggle" id="menu-toggle">☰</button>
+            <!-- <div class="logo">CommunityHub <span>SQLAlchemy</span></div> -->
+            <div class="logo-section">
+                <img src="{{ url_for('static', filename='../uploads/logo.jpg') }}" alt="Company Logo" class="logo">
+            </div>
+
+            <!-- <nav class="nav-links">
+                <a href="#" class="nav-link" data-page="home">Home</a>
+                <a href="#" class="nav-link" data-page="membership-status">Membership Status</a>
+                <a href="#" class="nav-link" data-page="community">Community</a>
+                <a href="#" class="nav-link" data-page="dashboard">Dashboard</a>
+                <a href="#" class="nav-link" data-page="profile">Profile</a>
+            </nav> -->
+            <div class="auth-buttons" id="auth-buttons">
+                <!-- This will be populated by JavaScript -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <ul class="sidebar-menu">
+            <li><a href="#" class="sidebar-link active" data-page="dashboard"><span class="menu-icon">📊</span> Dashboard</a></li>
+            <li><a href="#" class="sidebar-link" data-page="membership-status"><span class="menu-icon">📋</span> Membership Status</a></li>
+            <li><a href="#" class="sidebar-link" data-page="community"><span class="menu-icon">👥</span> Community News</a></li>
+            <li><a href="#" class="sidebar-link" data-page="profile"><span class="menu-icon">👤</span> Profile</a></li>
+            <li><a href="#" class="sidebar-link" data-page="posts"><span class="menu-icon">🖼️</span> Our Gallery</a></li>
+            <li><a href="#" class="sidebar-link" data-page="logo-management"><span class="menu-icon">🖼️</span> Logo Management</a></li>
+            <li><a href="#" class="sidebar-link" data-page="branch-management"><span class="menu-icon">🏢</span> Branch Management</a></li>
+            <li><a href="#" class="sidebar-link" data-page="settings"><span class="menu-icon">⚙️</span> Settings</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+        <!-- Home Page -->
+        <section id="home-page" class="page">
+            <div class="hero">
+                <div class="container">
+                    <h1>Welcome to Community Hub</h1>
+                    <p>Connect with like-minded people, share your thoughts, and explore diverse topics in our vibrant community. Powered by SQLAlchemy & WAMP Server.</p>
+                    <button class="btn btn-primary" id="connect-btn">Connect & Join Us</button>
+                </div>
+            </div>
+
+            <div class="community-section">
+                <div class="container">
+                    <h2 class="section-title">Recent Community Posts</h2>
+                    <div class="posts-container" id="home-posts">
+                        <div class="loading">Loading posts...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Page -->
+        <section id="dashboard-page" class="page hidden">
+            <div class="container">
+                <div class="community-section">
+                    <h2 class="section-title">Dashboard Overview</h2>
+                    
+                    <div class="dashboard-stats" id="dashboard-stats">
+                        <div class="stat-card">
+                            <h3 id="total-posts">0</h3>
+                            <p>Total Posts</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="user-posts">0</h3>
+                            <p>Your Posts</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="total-users">0</h3>
+                            <p>Community Members</p>
+                        </div>
+                    </div>
+
+                    <div class="create-post">
+                        <h3>Create a New Post</h3>
+                        <form id="create-post-form" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="post-title">Title (Optional)</label>
+                                <input type="text" id="post-title" placeholder="Enter post title...">
+                            </div>
+                            <div class="form-group">
+                                <label for="post-content">Content</label>
+                                <textarea id="post-content" placeholder="What's on your mind?" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="post-tags">Tags (Separate with commas)</label>
+                                <input type="text" id="post-tags" placeholder="e.g., technology, programming, web">
+                                <div class="tags-input" id="tags-preview"></div>
+                            </div>
+                            
+                            <!-- NEW: Media Upload Section -->
+                            <div class="form-group">
+                                <label>Add Media (Optional)</label>
+                                <div class="media-upload-section">
+                                    <div class="media-upload-item">
+                                        <label for="post-image">Image</label>
+                                        <input type="file" id="post-image" accept="image/*">
+                                        <small>Supported: JPG, PNG, GIF, WEBP (Max: 16MB)</small>
+                                    </div>
+                                    <div class="media-upload-item">
+                                        <label for="post-video">Video</label>
+                                        <input type="file" id="post-video" accept="video/*">
+                                        <small>Supported: MP4, MOV, AVI, MKV (Max: 16MB)</small>
+                                    </div>
+                                    <div class="media-upload-item">
+                                        <label for="post-audio">Audio</label>
+                                        <input type="file" id="post-audio" accept="audio/*">
+                                        <small>Supported: MP3, WAV, OGG, M4A (Max: 16MB)</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Post to Community</button>
+                        </form>
+                    </div>
+
+                    <h3 class="section-title">Recent Activity</h3>
+                    <div class="posts-container" id="dashboard-posts">
+                        <div class="loading">Loading recent posts...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Page -->
+        <section id="community-page" class="page hidden">
+            <div class="container">
+                <div class="community-section">
+                    <h2 class="section-title">News</h2>
+                    
+                    <div class="posts-container" id="community-posts">
+                        <div class="loading">Loading community News...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Page -->
+        <section id="profile-page" class="page hidden">
+            <div class="container">
+                <div class="community-section">
+                    <h2 class="section-title">Your Profile</h2>
+                    
+                    <div class="profile-section" id="profile-section">
+                        <div class="loading">Loading profile...</div>
+                    </div>
+
+                    <h3 class="section-title">Your Posts</h3>
+                    <div class="posts-container" id="profile-posts">
+                        <div class="loading">Loading your posts...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Posts Page -->
+        <section id="posts-page" class="page hidden">
+            <div class="container">
+                <div class="community-section">
+                    <h2 class="section-title">Our Gallery</h2>
+                    <div class="posts-container" id="my-posts">
+                        <div class="loading">Loading Photos...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Replace the existing "Our Gallery Page" section with this: -->
+        <section id="gallery-page" class="page hidden">
+            <div class="container">
+                <div class="community-section">
+                    <h2 class="section-title">Our Gallery</h2>
+                    
+                    <!-- Upload Section -->
+                    <div class="create-post" id="gallery-upload-section">
+                        <h3>Upload New Image to Gallery</h3>
+                        <form id="upload-gallery-form" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="gallery-title">Image Title *</label>
+                                <input type="text" id="gallery-title" placeholder="Enter image title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gallery-description">Description</label>
+                                <textarea id="gallery-description" placeholder="Enter image description (optional)"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="gallery-image">Select Image *</label>
+                                <input type="file" id="gallery-image" accept="image/*" required>
+                                <small>Supported formats: JPG, PNG, GIF, WEBP (Max: 16MB)</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Upload to Gallery</button>
+                        </form>
+                    </div>
+
+                    <!-- Gallery Grid -->
+                    <div class="gallery-section">
+                        <h3 class="section-title">Gallery Images</h3>
+                        <div class="gallery-grid" id="gallery-grid">
+                            <div class="loading">Loading gallery images...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Branch Management Page -->
+        <section id="branch-management-page" class="page hidden">
+            <div class="container">
+                <div class="community-section">
+                    <h2 class="section-title">Branch Management</h2>
+                    
+                    <!-- Create Branch Form -->
+                    <div class="create-post">
+                        <h3>Create New Branch</h3>
+                        <form id="create-branch-form">
+                            <div class="form-group">
+                                <label for="branch-name">Branch Name</label>
+                                <input type="text" id="branch-name" placeholder="Enter branch name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="branch-code">Branch Code</label>
+                                <input type="text" id="branch-code" placeholder="Enter unique branch code" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="branch-address">Address</label>
+                                <textarea id="branch-address" placeholder="Enter branch address" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="branch-contact">Contact Number</label>
+                                <input type="text" id="branch-contact" placeholder="Enter contact number">
+                            </div>
+                            <div class="form-group">
+                                <label for="branch-email">Email</label>
+                                <input type="email" id="branch-email" placeholder="Enter branch email">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create Branch</button>
+                        </form>
+                    </div>
+
+                    <h3 class="section-title">All Branches</h3>
+                    <div class="posts-container" id="branches-list">
+                        <div class="loading">Loading branches...</div>
+                    </div>
+
+                    <h3 class="section-title">Branch Activities</h3>
+                    <div class="create-post">
+                        <h4>Add New Activity</h4>
+                        <form id="create-activity-form">
+                            <div class="form-group">
+                                <label for="activity-branch">Select Branch</label>
+                                <select id="activity-branch" required>
+                                    <option value="">Select a branch</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="activity-title">Activity Title</label>
+                                <input type="text" id="activity-title" placeholder="Enter activity title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="activity-description">Description</label>
+                                <textarea id="activity-description" placeholder="Enter activity description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="activity-date">Activity Date</label>
+                                <input type="date" id="activity-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="activity-location">Location</label>
+                                <input type="text" id="activity-location" placeholder="Enter activity location">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create Activity</button>
+                        </form>
+                    </div>
+
+                    <div class="posts-container" id="activities-list">
+                        <div class="loading">Loading activities...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Logo Management Page -->
+<section id="logo-management-page" class="page hidden">
+    <div class="container">
+        <div class="community-section">
+            <h2 class="section-title">Logo Management</h2>
+            
+            <!-- Current Logo Display -->
+            <div class="profile-section">
+                <h3>Current Logo</h3>
+                <div id="current-logo-display" class="logo-preview">
+                    <div class="loading">Loading current logo...</div>
+                </div>
+            </div>
+
+            <!-- Upload New Logo -->
+            <div class="create-post">
+                <h3>Upload New Logo</h3>
+                <form id="upload-logo-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="logo-file">Select Logo Image</label>
+                        <input type="file" id="logo-file" accept="image/*" required>
+                        <small>Supported formats: JPG, PNG, GIF, WEBP, SVG (Max: 16MB)</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="logo-description">Logo Description (Optional)</label>
+                        <input type="text" id="logo-description" placeholder="Enter logo description">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload Logo</button>
+                </form>
+            </div>
+
+            <!-- Logo History -->
+            <div class="profile-section">
+                <h3>Logo History</h3>
+                <div id="logo-history-list" class="logo-history">
+                    <div class="loading">Loading logo history...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- Settings Page -->
+        <section id="settings-page" class="page hidden">
+            <div class="container">
+                <div class="community-section">
+                    <h2 class="section-title">Account Settings</h2>
+                    <div class="profile-section">
+                        <div class="loading">Loading settings...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Membership Status Page -->
+        <section id="membership-status-page" class="page hidden">
+            <div class="container">
+                <div class="community-section">
+                    <h2 class="section-title">Check Membership Application Status</h2>
+                    
+                    <div class="profile-section">
+                        <div class="form-group">
+                            <label for="status-mykad">Enter Your MyKad Number</label>
+                            <input type="text" id="status-mykad" placeholder="Enter your MyKad number">
+                        </div>
+                        <button class="btn btn-primary" id="check-status-btn">Check Status</button>
+                        
+                        <div id="status-result" class="mt-3">
+                            <!-- Status result will be displayed here -->
+                        </div>
+                    </div>
+
+                    <h3 class="section-title">All Applications (Admin View)</h3>
+                    <div class="applications-container" id="applications-container">
+                        <div class="loading">Loading applications...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sign In Page -->
+        <section id="signin-page" class="page hidden">
+            <div class="container auth-container">
+                <div class="auth-form">
+                    <h2>Sign In</h2>
+                    <div id="signin-message"></div>
+                    <form id="signin-form">
+                        <div class="form-group">
+                            <label for="signin-email">Email</label>
+                            <input type="email" id="signin-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signin-password">Password</label>
+                            <input type="password" id="signin-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+                    </form>
+                    <div class="form-footer">
+                        <p>Don't have an account? <a href="#" id="go-to-register">Register here</a></p>
+                        <p><small>Test account: test@example.com / password123</small></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Register Page -->
+        <section id="register-page" class="page hidden">
+            <div class="container auth-container">
+                <div class="auth-form">
+                    <h2>Create Account</h2>
+                    <div id="register-message"></div>
+                    <form id="register-form">
+                        <div class="form-group">
+                            <label for="register-username">Username</label>
+                            <input type="text" id="register-username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <input type="email" id="register-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Password</label>
+                            <input type="password" id="register-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-confirm">Confirm Password</label>
+                            <input type="password" id="register-confirm" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+                    </form>
+                    <div class="form-footer">
+                        <p>Already have an account? <a href="#" id="go-to-signin">Sign in here</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>CommunityHub</h3>
+                    <p>Connecting people through shared interests and meaningful conversations. Built with Flask, SQLAlchemy, and WAMP Server.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-page="community">Community</a></li>
+                        <li><a href="#" class="nav-link" data-page="dashboard">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Technology Stack</h3>
+                    <ul>
+                        <li>Flask & SQLAlchemy</li>
+                        <li>WAMP Server (MySQL)</li>
+                        <li>HTML, CSS, JavaScript</li>
+                        <li>RESTful API</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 CommunityHub - SQLAlchemy Edition. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Main Application JavaScript
+        class CommunityApp {
+            constructor() {
+                this.currentUser = null;
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.checkAuthStatus();
+                this.loadPosts();
+                this.setupStatusCheck();
+                this.loadCurrentLogo(); // Load logo when app starts
+                
+            }
+
+            setupEventListeners() {
+                // Navigation
+                document.getElementById('connect-btn').addEventListener('click', () => {
+                    window.location.href = '/membership';
+                });
+
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const page = e.target.getAttribute('data-page');
+                        this.showPage(`${page}-page`);
+                    });
+                });
+
+                // Sidebar navigation
+                document.querySelectorAll('.sidebar-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const page = e.target.getAttribute('data-page');
+                        this.showPage(`${page}-page`);
+                        this.updateSidebarActive(e.target);
+                        if (window.innerWidth <= 768) {
+                            this.toggleSidebar();
+                        }
+                    });
+                });
+
+                // Mobile menu toggle
+                document.getElementById('menu-toggle').addEventListener('click', () => {
+                    this.toggleSidebar();
+                });
+
+                // Auth navigation
+                document.getElementById('go-to-register').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.showPage('register-page');
+                });
+
+                document.getElementById('go-to-signin').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.showPage('signin-page');
+                });
+
+                // Form submissions
+                document.getElementById('signin-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleSignIn();
+                });
+
+                document.getElementById('register-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleRegister();
+                });
+
+                // Update the post creation function to handle FormData
+                document.getElementById('create-post-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    await this.handleCreatePost();
+                });
+                // Add this to your setupEventListeners method
+                document.getElementById('upload-gallery-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleGalleryUpload();
+                });
+                // Branch Management Forms
+                document.getElementById('create-branch-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleCreateBranch();
+                });
+
+                document.getElementById('create-activity-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleCreateActivity();
+                });
+
+                // Logo Management Form
+                document.getElementById('upload-logo-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogoUpload();
+                });
+
+                // Tags input
+                document.getElementById('post-tags').addEventListener('input', (e) => {
+                    this.updateTagsPreview(e.target.value);
+                });
+
+                // Close sidebar when clicking outside on mobile
+                document.addEventListener('click', (e) => {
+                    const sidebar = document.getElementById('sidebar');
+                    const menuToggle = document.getElementById('menu-toggle');
+                    if (window.innerWidth <= 768 && 
+                        sidebar.classList.contains('active') &&
+                        !sidebar.contains(e.target) &&
+                        !menuToggle.contains(e.target)) {
+                        this.toggleSidebar();
+                    }
+                });
+            }
+
+            toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.toggle('active');
+            }
+
+            updateSidebarActive(activeLink) {
+                document.querySelectorAll('.sidebar-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                activeLink.classList.add('active');
+            }
+
+            showPage(pageId) {
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.add('hidden');
+                });
+                document.getElementById(pageId).classList.remove('hidden');
+                this.clearMessages();
+
+                // Update sidebar state
+                const sidebarLink = document.querySelector(`[data-page="${pageId.replace('-page', '')}"]`);
+                if (sidebarLink) {
+                    this.updateSidebarActive(sidebarLink);
+                }
+
+                // Load appropriate data
+                if (pageId === 'community-page' || pageId === 'home-page') {
+                    this.loadPosts();
+                } else if (pageId === 'profile-page') {
+                    this.loadProfile();
+                } else if (pageId === 'dashboard-page') {
+                    this.loadDashboard();
+                } else if (pageId === 'membership-status-page') {
+                    this.loadMembershipStatus();
+                    this.setupStatusCheck();
+                } else if (pageId === 'logo-management-page') {
+                    this.loadCurrentLogo();
+                    this.loadLogoHistory();
+                }else if (pageId === 'gallery-page') {
+                    this.loadGallery();
+                } else if (pageId === 'branch-management-page') {
+                    this.loadBranches();
+                    this.loadActivities();
+                }
+            }
+
+            clearMessages() {
+                document.getElementById('signin-message').innerHTML = '';
+                document.getElementById('register-message').innerHTML = '';
+            }
+
+            showMessage(elementId, message, type) {
+                const element = document.getElementById(elementId);
+                element.innerHTML = `<div class="message ${type}">${message}</div>`;
+            }
+
+            async checkAuthStatus() {
+                try {
+                    const response = await fetch('/api/check-auth');
+                    const data = await response.json();
+                    
+                    this.updateAuthUI(data.loggedin, data.username, data.is_branch_admin);
+                } catch (error) {
+                    console.error('Error checking auth status:', error);
+                }
+            }
+
+            updateAuthUI(isLoggedIn, username = '', isBranchAdmin = false) {
+                const authButtons = document.getElementById('auth-buttons');
+                const mainContent = document.getElementById('main-content');
+                const sidebar = document.getElementById('sidebar');
+
+                if (isLoggedIn) {
+                    this.currentUser = { username, is_branch_admin: isBranchAdmin };
+                    authButtons.innerHTML = `
+                        <span class="user-welcome">Welcome, ${username}!</span>
+                        <button class="btn btn-danger" id="logout-btn">Logout</button>
+                    `;
+                    mainContent.classList.add('with-sidebar');
+                    sidebar.classList.add('active');
+                    
+                    document.getElementById('logout-btn').addEventListener('click', () => {
+                        this.handleLogout();
+                    });
+                } else {
+                    this.currentUser = null;
+                    authButtons.innerHTML = `
+                        <button class="btn btn-secondary" id="signin-btn">Sign In</button>
+                        <button class="btn btn-primary" id="register-btn">Register</button>
+                    `;
+                    mainContent.classList.remove('with-sidebar');
+                    sidebar.classList.remove('active');
+                    
+                    document.getElementById('signin-btn').addEventListener('click', () => {
+                        this.showPage('signin-page');
+                    });
+                    
+                    document.getElementById('register-btn').addEventListener('click', () => {
+                        this.showPage('register-page');
+                    });
+                }
+            }
+
+            async handleSignIn() {
+                const email = document.getElementById('signin-email').value;
+                const password = document.getElementById('signin-password').value;
+
+                try {
+                    const response = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            password: password
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        this.showMessage('signin-message', data.message, 'success');
+                        this.updateAuthUI(true, data.username, data.is_branch_admin);
+                        setTimeout(() => {
+                            this.showPage('dashboard-page');
+                            document.getElementById('signin-form').reset();
+                            this.loadDashboard();
+                        }, 1000);
+                    } else {
+                        this.showMessage('signin-message', data.message, 'error');
+                    }
+                } catch (error) {
+                    this.showMessage('signin-message', 'An error occurred. Please try again.', 'error');
+                    console.error('Login error:', error);
+                }
+            }
+
+            async handleRegister() {
+                const username = document.getElementById('register-username').value;
+                const email = document.getElementById('register-email').value;
+                const password = document.getElementById('register-password').value;
+                const confirm = document.getElementById('register-confirm').value;
+
+                if (password !== confirm) {
+                    this.showMessage('register-message', 'Passwords do not match', 'error');
+                    return;
+                }
+
+                if (password.length < 6) {
+                    this.showMessage('register-message', 'Password must be at least 6 characters', 'error');
+                    return;
+                }
+
+                if (username.length < 3) {
+                    this.showMessage('register-message', 'Username must be at least 3 characters', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            email: email,
+                            password: password
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        this.showMessage('register-message', data.message, 'success');
+                        this.updateAuthUI(true, data.username);
+                        setTimeout(() => {
+                            this.showPage('dashboard-page');
+                            document.getElementById('register-form').reset();
+                            this.loadDashboard();
+                        }, 1000);
+                    } else {
+                        this.showMessage('register-message', data.message, 'error');
+                    }
+                } catch (error) {
+                    this.showMessage('register-message', 'An error occurred. Please try again.', 'error');
+                    console.error('Registration error:', error);
+                }
+            }
+
+            async handleLogout() {
+                try {
+                    const response = await fetch('/api/logout');
+                    const data = await response.json();
+
+                    if (data.success) {
+                        this.updateAuthUI(false);
+                        this.showPage('home-page');
+                        this.loadPosts();
+                    }
+                } catch (error) {
+                    console.error('Logout error:', error);
+                }
+            }
+
+            async loadPosts() {
+                const homePostsContainer = document.getElementById('home-posts');
+                const communityPostsContainer = document.getElementById('community-posts');
+
+                homePostsContainer.innerHTML = '<div class="loading">Loading posts...</div>';
+                if (communityPostsContainer) {
+                    communityPostsContainer.innerHTML = '<div class="loading">Loading posts...</div>';
+                }
+
+                try {
+                    const response = await fetch('/api/posts');
+                    const posts = await response.json();
+
+                    this.displayPosts(homePostsContainer, posts);
+                    if (communityPostsContainer) {
+                        this.displayPosts(communityPostsContainer, posts);
+                    }
+                } catch (error) {
+                    console.error('Error loading posts:', error);
+                    homePostsContainer.innerHTML = '<div class="message error">Error loading posts</div>';
+                    if (communityPostsContainer) {
+                        communityPostsContainer.innerHTML = '<div class="message error">Error loading posts</div>';
+                    }
+                }
+            }
+
+            async loadDashboard() {
+                const dashboardPosts = document.getElementById('dashboard-posts');
+                dashboardPosts.innerHTML = '<div class="loading">Loading dashboard data...</div>';
+
+                try {
+                    // Load recent posts
+                    const postsResponse = await fetch('/api/posts');
+                    const posts = await postsResponse.json();
+                    this.displayPosts(dashboardPosts, posts.slice(0, 6)); // Show only 6 recent posts
+
+                    // Load dashboard stats
+                    await this.loadDashboardStats();
+                } catch (error) {
+                    console.error('Error loading dashboard:', error);
+                    dashboardPosts.innerHTML = '<div class="message error">Error loading dashboard</div>';
+                }
+            }
+
+            async loadDashboardStats() {
+                try {
+                    const response = await fetch('/api/dashboard/stats');
+                    const data = await response.json();
+
+                    if (data.success) {
+                        document.getElementById('total-posts').textContent = data.stats.total_posts;
+                        document.getElementById('user-posts').textContent = data.stats.user_posts;
+                        document.getElementById('total-users').textContent = data.stats.total_users;
+                    }
+                } catch (error) {
+                    console.error('Error loading dashboard stats:', error);
+                }
+            }
+
+            // Utility function to escape HTML
+            escapeHtml(unsafe) {
+                if (typeof unsafe !== 'string') return unsafe;
+                return unsafe
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            displayPosts(container, posts) {
+                if (posts.length === 0) {
+                    container.innerHTML = '<div class="message info">No posts yet. Be the first to post!</div>';
+                    return;
+                }
+
+                container.innerHTML = '';
+
+                posts.forEach(post => {
+                    const postCard = document.createElement('div');
+                    postCard.className = 'post-card';
+                    
+                    const postDate = new Date(post.created_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    postCard.innerHTML = `
+                        <div class="post-header">
+                            <div class="avatar">${post.username ? post.username.charAt(0).toUpperCase() : 'U'}</div>
+                            <div class="post-meta">
+                                <h3>${post.username || 'Unknown User'}</h3>
+                                <span>${postDate}</span>
+                            </div>
+                        </div>
+                        ${post.title ? `<div class="post-title">${this.escapeHtml(post.title)}</div>` : ''}
+                        <div class="post-content">
+                            <p>${this.escapeHtml(post.content)}</p>
+                        </div>
+                        
+                        <!-- Media Display -->
+                        ${post.image_filename ? `
+                            <div class="post-media">
+                                <h5>Image:</h5>
+                                <img src="/static/uploads/${post.image_filename}" 
+                                     alt="Post image" 
+                                     onerror="this.style.display='none'; console.error('Failed to load image: ${post.image_filename}')"
+                                     style="max-width: 100%; max-height: 400px; height: auto; border-radius: 8px;">
+                            </div>
+                        ` : ''}
+                        
+                        ${post.video_filename ? `
+                            <div class="post-media">
+                                <h5>Video:</h5>
+                                <video controls 
+                                       onerror="this.style.display='none'; console.error('Failed to load video: ${post.video_filename}')"
+                                       style="max-width: 100%; max-height: 400px; height: auto; border-radius: 8px;">
+                                    <source src="/static/uploads/${post.video_filename}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        ` : ''}
+                        
+                        ${post.audio_filename ? `
+                            <div class="post-media">
+                                <h5>Audio:</h5>
+                                <audio controls 
+                                       onerror="this.style.display='none'; console.error('Failed to load audio: ${post.audio_filename}')"
+                                       style="width: 100%;">
+                                    <source src="/static/uploads/${post.audio_filename}" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        ` : ''}
+                        
+                        ${post.tags && post.tags.length > 0 ? `
+                            <div class="post-tags">
+                                ${post.tags.map(tag => `<span class="tag">${this.escapeHtml(tag)}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                        ${this.currentUser && this.currentUser.username === post.username ? `
+                            <div class="post-actions">
+                                <button class="btn btn-danger btn-sm" onclick="app.deletePost(${post.id})">Delete</button>
+                            </div>
+                        ` : ''}
+                    `;
+
+                    container.appendChild(postCard);
+                });
+            }
+
+            async handleCreatePost() {
+                const title = document.getElementById('post-title').value;
+                const content = document.getElementById('post-content').value;
+                const tags = document.getElementById('post-tags').value;
+                const imageFile = document.getElementById('post-image').files[0];
+                const videoFile = document.getElementById('post-video').files[0];
+                const audioFile = document.getElementById('post-audio').files[0];
+                
+                console.log('Submitting post with:', {
+                    title,
+                    content,
+                    tags,
+                    imageFile: imageFile ? imageFile.name : 'None',
+                    videoFile: videoFile ? videoFile.name : 'None',
+                    audioFile: audioFile ? audioFile.name : 'None'
+                });
+                
+                if (!content.trim()) {
+                    alert('Please enter post content');
+                    return;
+                }
+                
+                const submitBtn = document.querySelector('#create-post-form button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Posting...';
+                submitBtn.disabled = true;
+                
+                try {
+                    const formData = new FormData();
+                    formData.append('title', title);
+                    formData.append('content', content);
+                    formData.append('tags', tags);
+                    
+                    if (imageFile) {
+                        console.log('Adding image file:', imageFile.name);
+                        formData.append('image', imageFile);
+                    }
+                    if (videoFile) {
+                        console.log('Adding video file:', videoFile.name);
+                        formData.append('video', videoFile);
+                    }
+                    if (audioFile) {
+                        console.log('Adding audio file:', audioFile.name);
+                        formData.append('audio', audioFile);
+                    }
+                    
+                    const response = await fetch('/api/posts', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    console.log('Server response:', result);
+                    
+                    if (result.success) {
+                        alert('Post created successfully!');
+                        document.getElementById('create-post-form').reset();
+                        document.getElementById('tags-preview').innerHTML = '';
+                        
+                        // Reload all relevant pages
+                        this.loadPosts();
+                        this.loadDashboard();
+                    } else {
+                        alert('Error: ' + result.message);
+                    }
+                } catch (error) {
+                    console.error('Error creating post:', error);
+                    alert('Error creating post: ' + error.message);
+                } finally {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            }
+
+            async deletePost(postId) {
+                if (!confirm('Are you sure you want to delete this post?')) {
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/posts/${postId}`, {
+                        method: 'DELETE'
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Reload all relevant pages
+                        this.loadPosts();
+                        this.loadDashboard();
+                        this.loadProfile();
+                    } else {
+                        alert(data.message);
+                    }
+                } catch (error) {
+                    console.error('Error deleting post:', error);
+                    alert('An error occurred while deleting the post');
+                }
+            }
+
+            updateTagsPreview(tagsInput) {
+                const tagsPreview = document.getElementById('tags-preview');
+                const tags = tagsInput.split(',')
+                    .map(tag => tag.trim())
+                    .filter(tag => tag.length > 0);
+
+                tagsPreview.innerHTML = tags.map(tag => `
+                    <span class="tag-preview">
+                        ${this.escapeHtml(tag)}
+                        <span class="remove-tag" onclick="app.removeTag('${this.escapeHtml(tag)}')">×</span>
+                    </span>
+                `).join('');
+            }
+
+            removeTag(tagToRemove) {
+                const tagsInput = document.getElementById('post-tags');
+                const currentTags = tagsInput.value.split(',')
+                    .map(tag => tag.trim())
+                    .filter(tag => tag.length > 0 && tag !== tagToRemove);
+                
+                tagsInput.value = currentTags.join(', ');
+                this.updateTagsPreview(tagsInput.value);
+            }
+
+            async loadProfile() {
+                const profileSection = document.getElementById('profile-section');
+                const profilePosts = document.getElementById('profile-posts');
+
+                profileSection.innerHTML = '<div class="loading">Loading profile...</div>';
+                profilePosts.innerHTML = '<div class="loading">Loading your posts...</div>';
+
+                try {
+                    const response = await fetch('/api/profile');
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Display profile info
+                        profileSection.innerHTML = `
+                            <div class="profile-header">
+                                <div class="profile-avatar">${data.user.username.charAt(0).toUpperCase()}</div>
+                                <div class="profile-info">
+                                    <h2>${data.user.username}</h2>
+                                    <p>${data.user.email}</p>
+                                    <p>Member since ${new Date(data.user.created_at).toLocaleDateString()}</p>
+                                </div>
+                            </div>
+                        `;
+
+                        // Display user's posts
+                        if (data.posts.length === 0) {
+                            profilePosts.innerHTML = '<div class="message info">You haven\'t created any posts yet.</div>';
+                        } else {
+                            this.displayPosts(profilePosts, data.posts);
+                        }
+                    } else {
+                        profileSection.innerHTML = `<div class="message error">${data.message}</div>`;
+                    }
+                } catch (error) {
+                    console.error('Error loading profile:', error);
+                    profileSection.innerHTML = '<div class="message error">Error loading profile</div>';
+                }
+            }
+
+            // ... (keep all the other methods for membership status, branch management, etc.)
+            // Membership Status Methods
+            async loadMembershipStatus() {
+                const applicationsContainer = document.getElementById('applications-container');
+                if (!applicationsContainer) return;
+                
+                applicationsContainer.innerHTML = '<div class="loading">Loading applications...</div>';
+
+                try {
+                    const response = await fetch('/api/membership/applications');
+                    const data = await response.json();
+
+                    if (data.success) {
+                        this.displayApplications(applicationsContainer, data.applications);
+                    } else {
+                        applicationsContainer.innerHTML = '<div class="message error">Error loading applications</div>';
+                    }
+                } catch (error) {
+                    console.error('Error loading membership applications:', error);
+                    applicationsContainer.innerHTML = '<div class="message error">Error loading applications</div>';
+                }
+            }
+
+            displayApplications(container, applications) {
+                if (applications.length === 0) {
+                    container.innerHTML = '<div class="message info">No applications found.</div>';
+                    return;
+                }
+
+                let html = `
+                    <div class="applications-table">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background-color: #f8f9fa;">
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6;">Name</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6;">MyKad</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6;">Type</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6;">Applied</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6;">Status</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                applications.forEach(app => {
+                    const statusClass = this.getStatusClass(app.status);
+                    html += `
+                        <tr>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6;">${app.full_name}</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6;">${app.mykad_no}</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6;">${app.membership_type}</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6;">${new Date(app.submitted_at).toLocaleDateString()}</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6;">
+                                <span class="tag ${statusClass}">${app.status}</span>
+                            </td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6;">
+                                ${this.getActionButtons(app)}
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                html += '</tbody></table></div>';
+                container.innerHTML = html;
+            }
+
+            getStatusClass(status) {
+                const statusClasses = {
+                    'Pending': 'bg-warning',
+                    'Approved': 'bg-success',
+                    'Rejected': 'bg-danger',
+                    'Cancelled': 'bg-secondary'
+                };
+                return statusClasses[status] || 'bg-secondary';
+            }
+
+            getActionButtons(application) {
+                let buttons = '';
+                
+                if (application.status === 'Pending') {
+                    buttons = `
+                        <button class="btn btn-success btn-sm" onclick="app.updateApplicationStatus(${application.id}, 'Approved')">Approve</button>
+                        <button class="btn btn-danger btn-sm" onclick="app.updateApplicationStatus(${application.id}, 'Rejected')">Reject</button>
+                    `;
+                } else if (application.status === 'Approved') {
+                    buttons = `
+                        <button class="btn btn-warning btn-sm" onclick="app.updateApplicationStatus(${application.id}, 'Cancelled')">Cancel</button>
+                    `;
+                } else if (application.status === 'Rejected') {
+                    buttons = `
+                        <button class="btn btn-success btn-sm" onclick="app.updateApplicationStatus(${application.id}, 'Approved')">Approve</button>
+                    `;
+                }
+                
+                return buttons;
+            }
+
+            async updateApplicationStatus(applicationId, newStatus) {
+                if (!confirm(`Are you sure you want to change the status to "${newStatus}"?`)) {
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/membership/update-status', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            application_id: applicationId,
+                            status: newStatus
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        alert(`Application status updated to ${newStatus}`);
+                        this.loadMembershipStatus(); // Reload the applications
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                } catch (error) {
+                    console.error('Error updating application status:', error);
+                    alert('An error occurred while updating the status.');
+                }
+            }
+
+            setupStatusCheck() {
+                const checkStatusBtn = document.getElementById('check-status-btn');
+                const statusMykad = document.getElementById('status-mykad');
+                const statusResult = document.getElementById('status-result');
+
+                if (checkStatusBtn && statusMykad && statusResult) {
+                    checkStatusBtn.addEventListener('click', async () => {
+                        const mykadNumber = statusMykad.value.trim();
+                        
+                        if (!mykadNumber) {
+                            alert('Please enter your MyKad number');
+                            return;
+                        }
+                        
+                        try {
+                            const response = await fetch('/api/membership/check-status', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    mykad_no: mykadNumber
+                                })
+                            });
+                            
+                            const data = await response.json();
+                            
+                            if (data.success) {
+                                const application = data.application;
+                                const statusClass = this.getStatusClass(application.status);
+                                
+                                statusResult.innerHTML = `
+                                    <div class="message ${statusClass.replace('bg-', '')}">
+                                        <h4>Application Found</h4>
+                                        <p><strong>Name:</strong> ${application.full_name}</p>
+                                        <p><strong>MyKad:</strong> ${application.mykad_no}</p>
+                                        <p><strong>Membership Type:</strong> ${application.membership_type}</p>
+                                        <p><strong>Applied On:</strong> ${new Date(application.submitted_at).toLocaleDateString()}</p>
+                                        <p><strong>Status:</strong> ${application.status}</p>
+                                        ${application.status === 'Pending' ? '<p>Your application is under review. Please check back later.</p>' : ''}
+                                        ${application.status === 'Approved' ? '<p>Congratulations! Your application has been approved.</p>' : ''}
+                                        ${application.status === 'Rejected' ? '<p>Your application has been rejected. Please contact support for more information.</p>' : ''}
+                                        ${application.status === 'Cancelled' ? '<p>Your application has been cancelled.</p>' : ''}
+                                    </div>
+                                `;
+                            } else {
+                                statusResult.innerHTML = `
+                                    <div class="message error">
+                                        <h4>Application Not Found</h4>
+                                        <p>${data.message}</p>
+                                        <p>Please check your MyKad number or submit a new application.</p>
+                                    </div>
+                                `;
+                            }
+                        } catch (error) {
+                            console.error('Error checking status:', error);
+                            statusResult.innerHTML = `
+                                <div class="message error">
+                                    <h4>Error</h4>
+                                    <p>An error occurred while checking your application status. Please try again.</p>
+                                </div>
+                            `;
+                        }
+                    });
+                }
+            }
+            // Add these methods to your CommunityApp class
+
+            async loadGallery() {
+                const galleryGrid = document.getElementById('gallery-grid');
+                if (!galleryGrid) return;
+                
+                galleryGrid.innerHTML = '<div class="loading">Loading gallery images...</div>';
+
+                try {
+                    const response = await fetch('/api/gallery');
+                    const data = await response.json();
+
+                    if (data.success) {
+                        this.displayGalleryImages(galleryGrid, data.images);
+                    } else {
+                        galleryGrid.innerHTML = '<div class="message error">Error loading gallery images</div>';
+                    }
+                } catch (error) {
+                    console.error('Error loading gallery:', error);
+                    galleryGrid.innerHTML = '<div class="message error">Error loading gallery images</div>';
+                }
+            }
+
+            // ADDED: displayGalleryImages method
+            displayGalleryImages(container, images) {
+                if (images.length === 0) {
+                    container.innerHTML = `
+                        <div class="message info" style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                            <h4>No Images in Gallery</h4>
+                            <p>Upload the first image to get started!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = '';
+                images.forEach(image => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    
+                    const uploadDate = new Date(image.created_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+
+                    galleryItem.innerHTML = `
+                        <div class="gallery-image-container">
+                            <img src="/static/uploads/${image.image_filename}" 
+                                alt="${this.escapeHtml(image.title)}" 
+                                class="gallery-image"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                onclick="app.viewImageModal('/static/uploads/${image.image_filename}')">
+                            <div class="image-placeholder" style="display: none; width: 100%; height: 250px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666; border-radius: 8px;">
+                                <span>Image not available</span>
+                            </div>
+                            <div class="gallery-overlay">
+                                <div class="gallery-info">
+                                    <h4>${this.escapeHtml(image.title)}</h4>
+                                    ${image.description ? `<p>${this.escapeHtml(image.description)}</p>` : ''}
+                                    <p><small>By: ${image.uploader_name || 'Unknown'}</small></p>
+                                    <p><small>Uploaded: ${uploadDate}</small></p>
+                                </div>
+                                <div class="gallery-actions">
+                                    ${this.currentUser ? `
+                                        <button class="btn btn-danger btn-sm" onclick="app.deleteGalleryImage(${image.id})">Delete</button>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(galleryItem);
+                });
+            }
+
+            async handleGalleryUpload() {
+                const title = document.getElementById('gallery-title').value;
+                const description = document.getElementById('gallery-description').value;
+                const imageFile = document.getElementById('gallery-image').files[0];
+
+                if (!title.trim()) {
+                    alert('Please enter an image title');
+                    return;
+                }
+
+                if (!imageFile) {
+                    alert('Please select an image file');
+                    return;
+                }
+
+                const submitBtn = document.querySelector('#upload-gallery-form button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Uploading...';
+                submitBtn.disabled = true;
+
+                try {
+                    const formData = new FormData();
+                    formData.append('title', title);
+                    formData.append('description', description);
+                    formData.append('image', imageFile);
+
+                    const response = await fetch('/api/gallery', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert('Image uploaded successfully!');
+                        document.getElementById('upload-gallery-form').reset();
+                        this.loadGallery(); // Reload the gallery
+                    } else {
+                        alert('Error: ' + result.message);
+                    }
+                } catch (error) {
+                    console.error('Error uploading image:', error);
+                    alert('Error uploading image: ' + error.message);
+                } finally {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            }
+
+            async deleteGalleryImage(imageId) {
+                if (!confirm('Are you sure you want to delete this image?')) {
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/gallery/${imageId}`, {
+                        method: 'DELETE'
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        alert('Image deleted successfully!');
+                        this.loadGallery(); // Reload the gallery
+                    } else {
+                        alert(data.message);
+                    }
+                } catch (error) {
+                    console.error('Error deleting gallery image:', error);
+                    alert('An error occurred while deleting the image');
+                }
+            }
+
+            viewImageModal(imageSrc) {
+                // Create modal overlay
+                const modal = document.createElement('div');
+                modal.className = 'image-modal';
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.9);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                    cursor: pointer;
+                `;
+                
+                modal.innerHTML = `
+                    <img src="${imageSrc}" alt="Gallery Image" 
+                         style="max-width: 90%; max-height: 90vh; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); cursor: default;"
+                         onclick="event.stopPropagation()">
+                `;
+                
+                // Close modal when clicking outside the image
+                modal.addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+                
+                // Add escape key listener
+                const keyHandler = (e) => {
+                    if (e.key === 'Escape') {
+                        document.body.removeChild(modal);
+                        document.removeEventListener('keydown', keyHandler);
+                    }
+                };
+                
+                document.addEventListener('keydown', keyHandler);
+                document.body.appendChild(modal);
+            }
+
+            // Branch Management Methods
+            // Branch Management Methods - UPDATED
+async loadBranches() {
+    const branchesList = document.getElementById('branches-list');
+    branchesList.innerHTML = '<div class="loading">Loading branches...</div>';
+
+    try {
+        const response = await fetch('/api/branches');
+        const data = await response.json();
+
+        if (data.success) {
+            this.displayBranches(branchesList, data.branches);
+        } else {
+            branchesList.innerHTML = '<div class="message error">Error loading branches</div>';
+        }
+    } catch (error) {
+        console.error('Error loading branches:', error);
+        branchesList.innerHTML = '<div class="message error">Error loading branches</div>';
+    }
+}
+
+displayBranches(container, branches) {
+    if (branches.length === 0) {
+        container.innerHTML = '<div class="message info">No branches found. Create the first branch!</div>';
+        return;
+    }
+
+    container.innerHTML = '';
+    branches.forEach(branch => {
+        const branchCard = document.createElement('div');
+        branchCard.className = 'post-card';
+        branchCard.innerHTML = `
+            <div class="post-header">
+                <div class="avatar">🏢</div>
+                <div class="post-meta">
+                    <h3>${branch.name}</h3>
+                    <span>Code: ${branch.code}</span>
+                </div>
+            </div>
+            <div class="post-content">
+                <p><strong>Address:</strong> ${branch.address}</p>
+                <p><strong>Contact:</strong> ${branch.contact_number || 'N/A'}</p>
+                <p><strong>Email:</strong> ${branch.email || 'N/A'}</p>
+                <p><strong>Members:</strong> ${branch.member_count} | <strong>Admins:</strong> ${branch.admin_count}</p>
+            </div>
+            <div class="post-actions">
+                <button class="btn btn-primary btn-sm" onclick="app.viewBranchStats(${branch.id})">View Stats</button>
+                <button class="btn btn-secondary btn-sm" onclick="app.editBranch(${branch.id})">Edit</button>
+                <button class="btn btn-danger btn-sm" onclick="app.deleteBranch(${branch.id})">Delete</button>
+            </div>
+        `;
+        container.appendChild(branchCard);
+    });
+}
+
+async loadActivities() {
+    const activitiesList = document.getElementById('activities-list');
+    const branchSelect = document.getElementById('activity-branch');
+    
+    activitiesList.innerHTML = '<div class="loading">Loading activities...</div>';
+    branchSelect.innerHTML = '<option value="">Select a branch</option>';
+
+    try {
+        // Load branches for dropdown
+        const branchesResponse = await fetch('/api/branches');
+        const branchesData = await branchesResponse.json();
+
+        if (branchesData.success) {
+            branchesData.branches.forEach(branch => {
+                const option = document.createElement('option');
+                option.value = branch.id;
+                option.textContent = `${branch.name} (${branch.code})`;
+                branchSelect.appendChild(option);
+            });
+        }
+
+        // Load all activities using the new endpoint
+        const activitiesResponse = await fetch('/api/branches/activities/all');
+        const activitiesData = await activitiesResponse.json();
+        
+        if (activitiesData.success) {
+            this.displayActivities(activitiesList, activitiesData.activities);
+        } else {
+            activitiesList.innerHTML = '<div class="message error">Error loading activities</div>';
+        }
+    } catch (error) {
+        console.error('Error loading activities:', error);
+        activitiesList.innerHTML = '<div class="message error">Error loading activities</div>';
+    }
+}
+
+displayActivities(container, activities) {
+    if (activities.length === 0) {
+        container.innerHTML = '<div class="message info">No activities found. Create the first activity!</div>';
+        return;
+    }
+
+    container.innerHTML = '';
+    activities.forEach(activity => {
+        const activityCard = document.createElement('div');
+        activityCard.className = 'post-card';
+        
+        const activityDate = new Date(activity.activity_date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        activityCard.innerHTML = `
+            <div class="post-header">
+                <div class="avatar">📅</div>
+                <div class="post-meta">
+                    <h3>${activity.title}</h3>
+                    <span>${activityDate}</span>
+                </div>
+            </div>
+            <div class="post-content">
+                <p>${activity.description || 'No description provided'}</p>
+                <p><strong>Location:</strong> ${activity.location || 'Not specified'}</p>
+                <p><strong>Branch:</strong> ${activity.branch_name || 'Unknown'}</p>
+                <p><strong>Created by:</strong> ${activity.created_by_name || 'Unknown'}</p>
+            </div>
+            <div class="post-actions">
+                ${activity.is_archived ? 
+                    '<span class="tag bg-secondary">Archived</span>' : 
+                    '<span class="tag bg-success">Active</span>'
+                }
+                <button class="btn btn-secondary btn-sm" onclick="app.editActivity(${activity.id})">Edit</button>
+                <button class="btn btn-warning btn-sm" onclick="app.toggleArchiveActivity(${activity.id}, ${!activity.is_archived})">
+                    ${activity.is_archived ? 'Restore' : 'Archive'}
+                </button>
+            </div>
+        `;
+        container.appendChild(activityCard);
+    });
+}
+
+// Create new branch
+async createBranch() {
+    const form = document.getElementById('create-branch-form');
+    const formData = new FormData(form);
+    
+    const branchData = {
+        name: formData.get('name'),
+        code: formData.get('code'),
+        address: formData.get('address'),
+        contact_number: formData.get('contact_number'),
+        email: formData.get('email')
+    };
+
+    try {
+        const response = await fetch('/api/branches', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(branchData)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            this.showMessage(data.message, 'success');
+            form.reset();
+            this.closeModal('create-branch-modal');
+            this.loadBranches();
+        } else {
+            this.showMessage(data.message, 'error');
+        }
+    } catch (error) {
+        console.error('Error creating branch:', error);
+        this.showMessage('Error creating branch', 'error');
+    }
+}
+
+// Create new activity - FIXED
+async createActivity() {
+    const form = document.getElementById('create-activity-form');
+    const formData = new FormData(form);
+    
+    const branchId = formData.get('branch_id');
+    const title = formData.get('title');
+    const description = formData.get('description');
+    const activityDate = formData.get('activity_date');
+    const location = formData.get('location');
+
+    if (!branchId || !title || !activityDate) {
+        this.showMessage('Please fill in all required fields', 'error');
+        return;
+    }
+
+    const activityData = {
+        branch_id: parseInt(branchId),
+        title: title,
+        description: description,
+        activity_date: activityDate,
+        location: location
+    };
+
+    console.log('Creating activity with data:', activityData);
+
+    try {
+        const response = await fetch('/api/branches/activities', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(activityData)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            this.showMessage(data.message, 'success');
+            form.reset();
+            this.closeModal('create-activity-modal');
+            this.loadActivities();
+        } else {
+            this.showMessage(data.message || 'Error creating activity', 'error');
+        }
+    } catch (error) {
+        console.error('Error creating activity:', error);
+        this.showMessage('Error creating activity', 'error');
+    }
+}
+
+// Edit branch
+async editBranch(branchId) {
+    try {
+        const response = await fetch('/api/branches');
+        const data = await response.json();
+
+        if (data.success) {
+            const branch = data.branches.find(b => b.id === branchId);
+            if (branch) {
+                document.getElementById('edit-branch-id').value = branch.id;
+                document.getElementById('edit-branch-name').value = branch.name;
+                document.getElementById('edit-branch-address').value = branch.address;
+                document.getElementById('edit-branch-contact').value = branch.contact_number || '';
+                document.getElementById('edit-branch-email').value = branch.email || '';
+                document.getElementById('edit-branch-active').checked = branch.is_active;
+                
+                this.openModal('edit-branch-modal');
+            }
+        }
+    } catch (error) {
+        console.error('Error loading branch for edit:', error);
+        this.showMessage('Error loading branch data', 'error');
+    }
+}
+
+// Update branch
+async updateBranch() {
+    const form = document.getElementById('edit-branch-form');
+    const branchId = document.getElementById('edit-branch-id').value;
+    
+    const branchData = {
+        name: document.getElementById('edit-branch-name').value,
+        address: document.getElementById('edit-branch-address').value,
+        contact_number: document.getElementById('edit-branch-contact').value,
+        email: document.getElementById('edit-branch-email').value,
+        is_active: document.getElementById('edit-branch-active').checked
+    };
+
+    try {
+        const response = await fetch(`/api/branches/${branchId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(branchData)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            this.showMessage(data.message, 'success');
+            this.closeModal('edit-branch-modal');
+            this.loadBranches();
+        } else {
+            this.showMessage(data.message, 'error');
+        }
+    } catch (error) {
+        console.error('Error updating branch:', error);
+        this.showMessage('Error updating branch', 'error');
+    }
+}
+
+// Edit activity
+async editActivity(activityId) {
+    try {
+        const response = await fetch('/api/branches/activities/all');
+        const data = await response.json();
+
+        if (data.success) {
+            const activity = data.activities.find(a => a.id === activityId);
+            if (activity) {
+                document.getElementById('edit-activity-id').value = activity.id;
+                document.getElementById('edit-activity-title').value = activity.title;
+                document.getElementById('edit-activity-description').value = activity.description || '';
+                
+                // Format date for datetime-local input
+                const activityDate = new Date(activity.activity_date);
+                const formattedDate = activityDate.toISOString().slice(0, 16);
+                document.getElementById('edit-activity-date').value = formattedDate;
+                
+                document.getElementById('edit-activity-location').value = activity.location || '';
+                document.getElementById('edit-activity-archived').checked = activity.is_archived;
+                
+                this.openModal('edit-activity-modal');
+            }
+        }
+    } catch (error) {
+        console.error('Error loading activity for edit:', error);
+        this.showMessage('Error loading activity data', 'error');
+    }
+}
+
+// Update activity - FIXED
+async updateActivity() {
+    const activityId = document.getElementById('edit-activity-id').value;
+    
+    const activityData = {
+        title: document.getElementById('edit-activity-title').value,
+        description: document.getElementById('edit-activity-description').value,
+        activity_date: document.getElementById('edit-activity-date').value,
+        location: document.getElementById('edit-activity-location').value,
+        is_archived: document.getElementById('edit-activity-archived').checked
+    };
+
+    if (!activityData.title || !activityData.activity_date) {
+        this.showMessage('Please fill in all required fields', 'error');
+        return;
+    }
+
+    console.log('Updating activity with data:', activityData);
+
+    try {
+        const response = await fetch(`/api/branches/activities/${activityId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(activityData)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            this.showMessage(data.message, 'success');
+            this.closeModal('edit-activity-modal');
+            this.loadActivities();
+        } else {
+            this.showMessage(data.message || 'Error updating activity', 'error');
+        }
+    } catch (error) {
+        console.error('Error updating activity:', error);
+        this.showMessage('Error updating activity', 'error');
+    }
+}
+
+// Toggle archive status for activity
+async toggleArchiveActivity(activityId, archiveStatus) {
+    try {
+        const response = await fetch(`/api/branches/activities/${activityId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                is_archived: archiveStatus
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            this.showMessage(data.message, 'success');
+            this.loadActivities();
+        } else {
+            this.showMessage(data.message, 'error');
+        }
+    } catch (error) {
+        console.error('Error updating activity:', error);
+        this.showMessage('Error updating activity', 'error');
+    }
+}
+
+// View branch statistics
+async viewBranchStats(branchId) {
+    try {
+        const response = await fetch(`/api/branches/${branchId}/stats`);
+        const data = await response.json();
+
+        if (data.success) {
+            const stats = data.stats;
+            const statsHtml = `
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>${stats.total_members}</h3>
+                        <p>Total Members</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>${stats.branch_admins}</h3>
+                        <p>Branch Admins</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>${stats.pending_applications}</h3>
+                        <p>Pending Applications</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>${stats.approved_applications}</h3>
+                        <p>Approved Applications</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>${stats.active_activities}</h3>
+                        <p>Active Activities</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('branch-stats-content').innerHTML = statsHtml;
+            this.openModal('branch-stats-modal');
+        } else {
+            this.showMessage(data.message, 'error');
+        }
+    } catch (error) {
+        console.error('Error loading branch stats:', error);
+        this.showMessage('Error loading branch statistics', 'error');
+    }
+}  
+
+
+// Logo Management Methods
+            // Logo Management Methods
+async loadCurrentLogo() {
+    try {
+        const response = await fetch('/api/logo');
+        const data = await response.json();
+        console.log('Current logo response:', data);
+
+        if (data.success && data.logo) {
+            this.currentLogo = data.logo;
+            this.displayCurrentLogo();
+        } else {
+            this.displayDefaultLogo();
+        }
+    } catch (error) {
+        console.error('Error loading current logo:', error);
+        this.displayDefaultLogo();
+    }
+}
+
+displayCurrentLogo() {
+    const currentLogoDisplay = document.getElementById('current-logo-display');
+    const headerLogo = document.querySelector('.logo-section img');
+
+    if (this.currentLogo) {
+        // Create image URL with cache busting
+        const timestamp = new Date().getTime();
+        const logoUrl = `/static/uploads/${this.currentLogo.filename}?t=${timestamp}`;
+        
+        const logoHtml = `
+            <img src="${logoUrl}" 
+                 alt="${this.currentLogo.original_filename || 'MCC Logo'}" 
+                 class="logo"
+                 style="max-width: 300px; max-height: 150px; width: auto; height: auto;"
+                 onerror="app.handleLogoError(this)">
+            <div class="logo-info" style="margin-top: 1rem;">
+                <p><strong>Filename:</strong> ${this.currentLogo.original_filename}</p>
+                <p><strong>Uploaded by:</strong> ${this.currentLogo.uploader_name || 'Unknown'}</p>
+                <p><strong>Date:</strong> ${new Date(this.currentLogo.uploaded_at).toLocaleDateString()}</p>
+                ${this.currentLogo.description ? `<p><strong>Description:</strong> ${this.currentLogo.description}</p>` : ''}
+            </div>
+        `;
+        
+        if (currentLogoDisplay) {
+            currentLogoDisplay.innerHTML = logoHtml;
+        }
+
+        // Update header logo
+        if (headerLogo) {
+            headerLogo.src = logoUrl;
+            headerLogo.alt = this.currentLogo.original_filename || 'MCC Logo';
+        }
+    } else {
+        this.displayDefaultLogo();
+    }
+}
+
+handleLogoError(imgElement) {
+    console.error('Failed to load logo image:', imgElement.src);
+    imgElement.style.display = 'none';
+    
+    // Show error message
+    const container = imgElement.parentElement;
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'message error';
+    errorDiv.innerHTML = `
+        <p>Failed to load logo image. The file may have been moved or deleted.</p>
+        <button class="btn btn-secondary btn-sm" onclick="app.loadCurrentLogo()">Retry</button>
+    `;
+    container.appendChild(errorDiv);
+}
+
+displayDefaultLogo() {
+    const currentLogoDisplay = document.getElementById('current-logo-display');
+    const headerLogo = document.querySelector('.logo-section img');
+
+    if (currentLogoDisplay) {
+        currentLogoDisplay.innerHTML = `
+            <div class="logo-placeholder" style="width: 300px; height: 150px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; border: 2px dashed #dee2e6; border-radius: 8px; margin: 0 auto;">
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🏢</div>
+                    <p style="color: #6c757d; margin: 0;">No Logo Set</p>
+                    <small style="color: #6c757d;">Upload a logo to display here</small>
+                </div>
+            </div>
+        `;
+    }
+}
+
+async handleLogoUpload() {
+    const logoFile = document.getElementById('logo-file').files[0];
+    const description = document.getElementById('logo-description').value;
+
+    if (!logoFile) {
+        alert('Please select a logo file');
+        return;
+    }
+
+    // Validate file type
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
+    if (!validTypes.includes(logoFile.type)) {
+        alert('Please select a valid image file (JPG, PNG, GIF, WEBP, SVG)');
+        return;
+    }
+
+    // Validate file size (16MB max)
+    if (logoFile.size > 16 * 1024 * 1024) {
+        alert('File size must be less than 16MB');
+        return;
+    }
+
+    const submitBtn = document.querySelector('#upload-logo-form button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Uploading...';
+    submitBtn.disabled = true;
+
+    try {
+        const formData = new FormData();
+        formData.append('logo', logoFile);
+        if (description) {
+            formData.append('description', description);
+        }
+
+        console.log('Uploading logo:', logoFile.name);
+
+        const response = await fetch('/api/logo', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+        console.log('Upload response:', result);
+
+        if (result.success) {
+            alert('Logo uploaded successfully!');
+            document.getElementById('upload-logo-form').reset();
+            
+            // Reload both current logo and history
+            await this.loadCurrentLogo();
+            await this.loadLogoHistory();
+        } else {
+            alert('Error: ' + (result.message || 'Unknown error occurred'));
+        }
+    } catch (error) {
+        console.error('Error uploading logo:', error);
+        alert('Error uploading logo: ' + error.message);
+    } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
+}
+
+async loadLogoHistory() {
+    const historyList = document.getElementById('logo-history-list');
+    if (!historyList) return;
+
+    historyList.innerHTML = '<div class="loading">Loading logo history...</div>';
+
+    try {
+        const response = await fetch('/api/logo/history');
+        const data = await response.json();
+        console.log('Logo history response:', data);
+
+        if (data.success) {
+            this.displayLogoHistory(historyList, data.logos);
+        } else {
+            historyList.innerHTML = '<div class="message error">Error loading logo history: ' + (data.message || 'Unknown error') + '</div>';
+        }
+    } catch (error) {
+        console.error('Error loading logo history:', error);
+        historyList.innerHTML = '<div class="message error">Error loading logo history: ' + error.message + '</div>';
+    }
+}
+
+displayLogoHistory(container, logos) {
+    if (!logos || logos.length === 0) {
+        container.innerHTML = '<div class="message info">No logo history found. Upload your first logo to get started!</div>';
+        return;
+    }
+
+    container.innerHTML = '';
+    logos.forEach(logo => {
+        const timestamp = new Date().getTime();
+        const logoUrl = `/static/uploads/${logo.filename}?t=${timestamp}`;
+        
+        const logoItem = document.createElement('div');
+        logoItem.className = `logo-history-item ${logo.is_active ? 'active' : ''}`;
+        
+        logoItem.innerHTML = `
+            <div class="logo-preview-small">
+                <img src="${logoUrl}" 
+                     alt="${logo.original_filename}"
+                     style="max-width: 80px; max-height: 40px; width: auto; height: auto; object-fit: contain;"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="image-placeholder" style="display: none; width: 80px; height: 40px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666; border-radius: 4px; font-size: 0.8rem;">
+                    <span>No Image</span>
+                </div>
+            </div>
+            <div class="logo-history-info">
+                <h5>${logo.original_filename}</h5>
+                <p>Uploaded by ${logo.uploader_name || 'Unknown'} on ${new Date(logo.uploaded_at).toLocaleDateString()}</p>
+                ${logo.description ? `<p><small>${logo.description}</small></p>` : ''}
+            </div>
+            <div class="logo-actions">
+                ${!logo.is_active ? `
+                    <button class="btn btn-success btn-sm" onclick="app.setLogoActive(${logo.id})">Set Active</button>
+                ` : '<span class="tag bg-success">Active</span>'}
+                ${!logo.is_active ? `
+                    <button class="btn btn-danger btn-sm" onclick="app.deleteLogo(${logo.id})">Delete</button>
+                ` : ''}
+            </div>
+        `;
+        container.appendChild(logoItem);
+    });
+}
+
+async setLogoActive(logoId) {
+    if (!confirm('Set this logo as the active logo?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/logo/${logoId}/set-active`, {
+            method: 'POST'
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert('Logo set as active successfully!');
+            // Reload both current logo and history
+            await this.loadCurrentLogo();
+            await this.loadLogoHistory();
+        } else {
+            alert('Error: ' + (data.message || 'Failed to set logo as active'));
+        }
+    } catch (error) {
+        console.error('Error setting logo active:', error);
+        alert('An error occurred while setting logo as active: ' + error.message);
+    }
+}
+
+async deleteLogo(logoId) {
+    if (!confirm('Are you sure you want to delete this logo? This action cannot be undone.')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/logo/${logoId}`, {
+            method: 'DELETE'
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert('Logo deleted successfully!');
+            await this.loadLogoHistory();
+            // Reload current logo in case we deleted the active one
+            await this.loadCurrentLogo();
+        } else {
+            alert('Error: ' + (data.message || 'Failed to delete logo'));
+        }
+    } catch (error) {
+        console.error('Error deleting logo:', error);
+        alert('An error occurred while deleting the logo: ' + error.message);
+    }
+}
+        }
+        // Initialize the application
+        const app = new CommunityApp();
+
+        // Make app globally available for onclick handlers
+        window.app = app;
+    </script>
+</body>
+</html>
