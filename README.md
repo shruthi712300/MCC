@@ -1,4 +1,4 @@
-Political Party Membership Portal
+**Political Party Membership Portal**
 A comprehensive web-based platform for managing political party membership lifecycle, branch activities, committees, and centralized reporting with full PDPA compliance.
 
 🚀 Features
