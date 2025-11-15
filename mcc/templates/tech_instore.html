@@ -1,0 +1,135 @@
+{% extends "layout.html" %} 
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard-styles.css') }}" />
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %} 
+{% block inner_content %}
+
+{% include "sidebar_new_technician.html" %}
+
+<div class="page-content p-4" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+
+    <div class="container-fluid right-content">
+        
+        <h1 class="h2">Instore</h1>
+
+
+        <a href="{{ url_for('tech_instore_add_task') }}">
+        <button class="btn btn-dark"  data-bs-toggle="modal" data-bs-target="#add_task">Add Task</button>
+              </button></a>      
+
+              
+        
+          </div>        
+          
+          <form action="/tech/instore" method="post">
+            <div class="input-group" style="padding-top: 10px;">
+                <input type="hidden" name="ftype" value="on" />
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>Service Date</label>
+                    <input type="date" id="form1" class="form-control" name="fdate" />
+
+                </div>
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>Customer Phone No</label>
+                    <input type="search" size="5" placeholder="Phone" id="form1" class="form-control" name="fphone" />
+
+                </div>
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>Engineer</label>
+                    <input type="search" size="7" placeholder="Technician" id="form1" class="form-control" name="ftechnician" />
+
+                </div>
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>OS.ID</label>
+                    <input type="search" size="5" placeholder="OS.ID" id="form1" class="form-control" name="fid" />
+
+                </div>
+                
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>Service Type</label>
+                    
+                <select class="form-control" name="fstype" > 
+                    <option value="">Select an Service Type</option>
+                    <option value="service" id="service">Service</option>                    
+                    <option value="chiplevel" id="chiplevel">ChipLevel</option>
+                    <option value="warranty" id="warranty">Warranty</option>
+                </select>
+                </div>
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>Status</label>
+                    <select class="form-control" name="fstatus" > 
+                    <option value="">Status</option>
+                    <option value="open" id="open">Open</option>
+                    <option value="ready" id="ready">ready</option>
+                    <option value="delivered" id="delivered">Delivered</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    
+        <div class="table-responsive"> 
+            <br>
+            <h2 class="h3">Work</h2>
+            <table id="myTable" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">IN.ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">View</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for task in tasks -%}
+                    <tr>
+                        <td>
+                            {{ task.task_id }}
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ task.date }}</p>
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ task.customer.name }}</p>
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ task.technician.name }}</p>
+                        </td>
+                        
+                        
+                        
+                        <td>
+        
+                            <a href="{{ url_for('tech_instore_task_view_by_id', task_id=task.task_id) }}"><button role="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"  data-bs-target="#viewtask">View</button></a>
+                        </td>
+                    </tr>
+
+                    {% endfor -%}
+                </tbody>
+            </table>
+            
+        </div>
+
+        
+</div>
+</main>
+
+        
+
+{% endblock %}

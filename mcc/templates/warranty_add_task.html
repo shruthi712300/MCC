@@ -1,0 +1,170 @@
+{% extends "layout.html" %} 
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard-styles.css') }}" />
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %} 
+{% block inner_content %}
+
+{% include "sidebar_new_admin.html" %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='autosuggest.css') }}" />
+<div class="page-content p-5" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+
+    
+    <a href="{{ url_for('instore_task_update', task_id=tasks.task_id ) }}"><i class="fa fa-chevron-circle-left fa-3x" ></i>
+    </a>
+    <div class="container-fluid right-content">
+<form  method="post" >
+  <input type="hidden" name="task_id" value="{{ tasks.task_id }}">
+      <div class="row">
+        <div class="col"><h1>Update Warranty</h1></div>
+        <div class="col">
+    <button class="btn btn-dark" role="submit" data-bs-toggle="modal" data-bs-target="#">Save</button>
+
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col">
+      <label>Customer Name</label>
+      <h1>{{ tasks.customer.name }}</h1>
+    </div>
+    <div class="col">
+        <label>Status</label><span style="color: red;">*</span>
+        <select class="form-control" name="status" required>
+            <option value=" " id="status">Select an option</option>
+          {% for status in ["Sent","Received"] %}
+          <option value={{status}} {{  'selected' if flag and status==warranty.status  }}>{{status}}</option>
+          {% endfor %}
+        </select>
+    </div>
+      
+  </div>
+
+    <div class="row">
+      <div class="col">
+        <label>Outward Date</label><span style="color: red;">*</span>
+        <input type="Date" name="outward_date" value='{{warranty.outward_date if flag }}' class="form-control" required>
+      </div>
+      <div class="col">
+        <label>Inward Date</label>
+        <input type="Date" name="inward_date" value='{{warranty.inward_date if flag }}' class="form-control" >
+      </div>    
+    </div>
+
+    {% if errors%}
+    <div class="alert alert-danger" style="width: 250px;" role="alert">
+      {{errors}}
+  </div>
+  {% endif %}
+      <div class="row">
+        <div class="col">
+          <label>Partner Name</label><span style="color: red;">*</span>
+          <input type="text" 
+ style="text-transform: capitalize;"list="partner_name" class="form-control" placeholder="Partner Name" value='{{ warranty.partners.partner_name if flag and warranty.partners }}'
+              name="partner_name" required autocomplete="off">
+          
+          
+        </div>
+        
+        <div class="col">
+            <label>Type</label><span style="color: red;">*</span>
+        <select class="form-control" name="wtype" required>
+            <option value=" " id="wtype">Select an option</option>
+          {% for wtype in ["Warranty","Service","Returnable","Non-Returnable"] %}
+          <option value={{wtype}} {{  'selected' if flag and wtype==warranty.wtype  }} >{{wtype}}</option>
+          {% endfor %}
+        </select>
+        </div>
+
+        
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Est Days</label><span style="color: red;">*</span>
+          <input type="text" 
+ style="text-transform: capitalize;"name="est_days" value='{{ warranty.est_days  if flag}}' class="form-control" required>
+        </div>
+        <div class="col">
+        
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Work</label><span style="color: red;">*</span>
+          <input type="text" 
+ style="text-transform: capitalize;"name="work" value='{{ warranty.work if flag}}'  class="form-control" required>
+        </div>
+        <div class="col">
+          
+        </div>
+        
+      </div>
+      
+      <div class="row">
+        <div class="col">
+          <label>Remarks</label>
+          <input type="text" 
+ style="text-transform: capitalize;"name="remarks" value='{{ warranty.remarks if flag}}' class="form-control">
+        </div>
+      </div>
+
+      <h1>Product Details</h1>
+
+      <div class="row">
+        <div class="col">
+          <label>Product Type</label>
+          <h1>{{ tasks.product.product_name }}</h1>
+          
+        </div>
+        <div class="col">
+          <label>Product Model</label>
+          <h1>{{tasks.product.product_company}}</h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Problem</label>
+          <h1>{{ tasks.problem  }}</h1>
+        </div>
+        <div class="col">
+          <label>Product Details</label>
+          <h1>{{ tasks.product_details }}</h1>
+        </div>
+      </div>
+   
+      <div class="row">
+        <div class="col">
+          <label>Items Sent</label>
+          <input type="text" 
+ style="text-transform: capitalize;"name="items_sent" value='{{ warranty.items_sent  if flag}}' class="form-control">
+        </div>
+        <div class="col">
+          <label>Serial No</label>
+          <h1>{{ tasks.serial_no }}</h1>
+        </div>
+      </div>
+
+      
+        
+        
+      </div>
+    </form>
+
+      
+    </div>
+</div>
+
+{% endblock %}

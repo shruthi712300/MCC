@@ -1,0 +1,98 @@
+{% extends "layout.html" %} 
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard-styles.css') }}" />
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %} 
+{% block inner_content %}
+
+{% include "sidebar_new_technician.html" %}
+
+<div class="page-content p-4" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+
+    <h1>Customer</h1>
+    <div class="input-group" style="padding-top: 10px;">
+      
+      <form action="/tech/customers" method="post">
+        <div class="input-group" style="padding-top: 10px;">
+            <input type="hidden" name="ftype" value="on" />
+            
+            <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                <label>Customer Phone No</label>
+                <input type="search"  placeholder="Phone" id="form1" class="form-control" name="fphone" />
+
+            </div>
+            <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+              <label>Customer Name</label>
+              <input type="search"  placeholder="Name" id="form1" class="form-control" name="fname" />
+
+          </div>
+            <div class="form-outline" style="padding-left: 10px; padding-top: 31px;">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+    
+
+    <div class="table-responsive">
+      <br>
+      
+      <table id="myTable" class="table">
+          <thead>
+              <tr>
+                  <th scope="col">C.ID</th>
+                  <th scope="col">Customer Name</th>
+                  <th scope="col">Phone No</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">View Work</th>
+              </tr>
+          </thead>
+          <tbody class="table-group-divider">
+      
+              {% for cust in customers -%}
+              <tr>
+                  <th scope="row">
+                      <p style="text-transform: capitalize;">{{ cust.customer_id }}</p>
+                  </th>
+                  <td>
+                      <p style="text-transform: capitalize;">{{ cust.name }}</p>
+                  </td>
+                  <td>
+                      <p style="text-transform: capitalize;">{{ cust.phone_no }}</p>
+                  </td>
+                  <td>
+                      <p style="text-transform: capitalize;">{{ cust.address }}</p>
+
+                  </td>
+                  <td>
+                    
+                    <a href="{{ url_for('tech_customer_onsite_task_view', customer_id=cust.customer_id) }}"><button
+                      role="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                      data-bs-target="#viewtask">Onsite</button></a>
+
+                    <a href="{{ url_for('tech_customer_instore_task_view', customer_id=cust.customer_id) }}"><button
+                      role="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                      data-bs-target="#viewtask">Instore</button></a>
+          
+                  </td>
+              </tr>
+              {% endfor %}
+
+          </tbody>
+      </table>
+
+  </div>
+   
+  
+  </div>
+
+{% endblock %}

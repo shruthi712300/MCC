@@ -1,0 +1,378 @@
+{% extends "layout.html" %} 
+{% block title %}COM CARE{%endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard-styles.css') }}" />
+{% endblock %} 
+{% block inner_content %}
+
+
+{% include "sidebar_new_admin.html" %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='autosuggest.css') }}" /> 
+<div class="page-content p-4" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+
+
+                          
+    <div class="container-fluid right-content">
+
+      <script>
+        function charge_update() {
+          var x = document.getElementById("status").value;
+          var y = document.getElementById("final_charge").value;
+          if (x == "Delivered" && y == ""){
+            
+            alert("Please Enter Service Charge");
+            
+            return false;
+            
+          }
+        }
+      </script>
+      
+<form  method="post"  id="todo-form">
+      <div class="row">
+        <div class="col"><h1>Add Task</h1></div>
+        <div class="col">
+    <button class="btn btn-dark" type="submit"  data-bs-toggle="modal" data-bs-target="#" onclick="return charge_update()" >Save</button>
+
+    {% if flag and tasks.service_type=='Chiplevel' %}
+    <a href="{{ url_for('chiplevel_add',  task_id=tasks.task_id) }}">
+    <button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#">Chiplevel</button></a>
+    {% endif %}
+    {% if flag and tasks.service_type=='Warranty' %}
+    <a href="{{ url_for('warranty_add' , task_id=tasks.task_id) }}">
+    <button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#">Warranty</button></a>
+    {% endif %}
+    {% if flag and tasks.task_id %}
+    <a href="{{ url_for('instore_download_report',task_id=tasks.task_id) }}" target="_blank"><button type="button"
+      class="btn btn-dark">Download</button></a>
+      {% endif %}
+    </div>
+  </div>
+
+
+
+
+    <div class="row">
+        <div class="col">
+          <label>Date<span style="color: red;">*</span></label>
+          <input type="Date" name="date" format="dd/mm/yyyy" value='{{tasks.date if flag }}' class="form-control" required>
+        </div>
+        <div class="col">
+          <label>Status</label>
+          <select class="form-control" name="status" id="status" onchange="showTextbox()">
+            {% for status in ["Open","Ready","Delivered"] %}
+            <option value={{status}} {{  'selected' if flag and status==tasks.status  }}>{{status}}</option>
+            {% endfor %}
+        </select>
+        </div>
+        <div class="col">
+          <label>Delivered By</label>
+          <input type="text" name="delivered_by" value='{{ tasks.delivered_by  if flag and tasks.delivered_by}}' class="form-control">
+          </div>
+          <div class="col">
+            </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Customer Name<span style="color: red;">*</span></label>
+          <input type="text"  style="text-transform: capitalize;" name="customer_name" id="name_lit" value="{{ tasks.customer.name  if flag}}" autocomplete="off" class="form-control" required>
+          <!-- <ul class="list"></ul> -->
+        </div>
+        <div class="col">
+          <label>Phone No<span style="color: red;">*</span></label>
+          <input type="number" name="phone_no" id="phone_lit" value='{{ tasks.customer.phone_no  if flag }}' class="form-control" autocomplete="off" required>
+          <!-- <ul class="list1"></ul> -->
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Type<span style="color: red;">*</span></label>
+          <select class="form-control" name="service_type" required>
+            <option value="" id="service_type">Select an option</option>
+            {% for work in ["Service","Chiplevel","Warranty"] %}
+            <option value={{work}} {{  'selected' if  flag and work == tasks.service_type   }}>{{work}}</option>
+            {% endfor %}
+        </select>
+          
+        </div>
+        <div class="col">
+          <label>Engineer<span style="color: red;">*</span></label>
+          <select class="form-control" name="technician_id" required>
+            <option value="" id="service_type">Select an Engineer</option>
+            {% for technician in technicians -%}
+            <option value={{technician.technician_id}} {{ 'selected' if flag and technician.technician_id == tasks.technician.technician_id  }}>{{ technician.name }}</option>
+            {% endfor -%}
+        </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Est Days<span style="color: red;">*</span></label>
+          <input type="number" name="est_days" value='{{ tasks.est_days  if flag and tasks.est_days}}' class="form-control" required>
+        </div>
+        <div class="col">
+          <label>Est Charges<span style="color: red;">*</span></label>
+          <input type="number" name="est_charge" value='{{ tasks.est_charge  if flag and tasks.est_charge}}'  class="form-control" required>
+        </div>
+        
+      </div>
+
+      
+      
+
+      <h1>Product Details</h1>
+
+      <div class="row">
+        <div class="col">
+          <label>Product Type<span style="color: red;">*</span></label>
+          <select class="form-control" name="product_name_in" required>
+            <option value="" id="product_name_in">Select an option</option>
+            {% for product_name_in in ["Laptop","Desktop_CPU","Printer","Monitor","CCTV", "PC_Accessories","Other_Accessories"] -%}
+            <option value={{product_name_in}} {{ 'selected' if flag and product_name_in == tasks.product_name_in  }} id="product_name_in">{{ product_name_in }}</option>
+            {% endfor -%}
+        </select>
+        </div>
+        <div class="col">
+          <label>Product Model<span style="color: red;">*</span></label>
+          <input type="text" 
+ style="text-transform: capitalize;"name="product_company_in" value='{{ tasks.product_company_in  if flag}}'  class="form-control" required>
+        </div>
+      </div>
+ 
+      <div class="row">
+        <div class="col">
+            <label>Problem<span style="color: red;">*</span></label>
+          <input type="text"  style="text-transform: capitalize;"name="problem" value='{{ tasks.problem  if flag}}'  class="form-control" required>
+        </div>
+        <div class="col">
+          <label>Serial No</label>
+          <input type="text"  style="text-transform: capitalize;"name="serial_no" value='{{ tasks.serial_no  if flag}}'  class="form-control" >
+        </div>
+        
+          
+        
+      </div>
+   
+      <div class="row">
+        
+        <div class="col">
+          <label>Power Cable</label><span style="color: red;">*</span><br>
+          
+    
+          <div >
+
+          <input type="radio" style="width: 20px;height: 20px;" name="power_cable" id="yes" value="yes" 
+          {% if flag and 'yes' in tasks.power_cable %}
+                checked
+            {% endif %} required></input><label for="yes">Yes</label>
+
+          <input type="radio" max="4" style="width: 20px;height: 20px;" name="power_cable" id="no" value="no"
+          {% if 'no' in tasks.power_cable %}
+                checked
+            {% endif %} required><label for="no">No</label></input>
+        </div>
+          </div>
+
+          <div class="col">
+            <label>Charger</label><span style="color: red;">*</span><br>
+            
+      
+            <div >
+  
+            <input type="radio" style="width: 20px;height: 20px;" name="charger" id="yes1" value="yes"
+            {% if flag and 'yes' in tasks.charger %}
+                checked
+            {% endif %} required
+            ></input><label for="yes1">Yes</label>
+  
+            <input type="radio" max="4" style="width: 20px;height: 20px;" name="charger" id="no1" value="no"
+            {% if 'no' in tasks.charger %}
+                checked
+            {% endif %} required
+            ><label for="no1">No</label></input>
+          </div>
+            </div>
+            <div class="col">
+              <label>Bag</label><span style="color: red;">*</span><br>
+              
+        
+              <div >
+    
+              <input type="radio" style="width: 20px;height: 20px;" name="bag" id="yes2" value="yes"
+              {% if 'yes' in tasks.bag %}
+                checked
+            {% endif %} required
+            ></input><label for="yes2">Yes</label>
+    
+              <input type="radio" max="4" style="width: 20px;height: 20px;" name="bag" id="no2" value="no"
+              {% if 'no' in tasks.bag %}
+                checked
+            {% endif %} required
+            ><label for="no2">No</label></input>
+            </div>
+              </div>
+          
+          
+        
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Remarks</label>
+          <input type="text" 
+ style="text-transform: capitalize;"name="remarks" value='{{ tasks.remarks if flag}}' class="form-control">
+        </div>
+        
+        <div class="col">
+          <label>Other Items Received</label>
+          <input type="text" 
+ style="text-transform: capitalize;"name="items_received" value='{{ tasks.items_received  if flag}}' class="form-control">
+        </div>
+      </div>
+
+      <h1>Service Chargers</h1>
+      <div class="row">
+        <div class="col">
+          <label>Service Charges</label>
+          <input type="number" id="final_charge" name="final_charge" value='{{ tasks.final_charge if flag and tasks.final_charge}}'  class="form-control">
+        </div>
+        <div class="col">
+          <label>Recived Charges</label>
+          <input type="number" name="recived_charge" value='{{ tasks.recived_charge  if flag and tasks.recived_charge}}'  class="form-control">
+        </div>
+        <div class="col">
+          <label>Discount Charges</label>
+          <input type="number" name="discount" value='{{ tasks.discount  if flag and tasks.discount }}'  class="form-control">
+        </div>
+      </div>
+      <input type="text"  style="display: none;">
+    </form>
+    </div>
+    <!----
+    <div class="row">
+      <div class="col">
+        <label>Product Type<span style="color: red;">*</span></label>
+        <select class="form-control" name="product_name" required disabled>
+          <option value="" id="product_name">Select an option</option>
+          {% for product_name in ["Laptop","Desktop_CPU","Printer","Monitor","CCTV", "PC_Accessories","Other_Accessories"] -%}
+          <option value={{product_name}} {{ 'selected' if flag and product_name == tasks.product.product_name  }} id="product_name">{{ product_name }}</option>
+          {% endfor -%}
+      </select>
+      </div>
+      <div class="col">
+        <label>Product Model<span style="color: red;">*</span></label>
+        <input type="text" 
+style="text-transform: capitalize;"name="product_company" value='{{ tasks.product.product_company  if flag}}'  class="form-control" required disabled>
+      </div>
+    </div>
+    <input type="text"  id="myTextbox1" style="display: none;">
+    ---->
+</div>
+
+<script>
+  function showTextbox() {
+      let dropdown = document.getElementById('myDropdown');
+      let textbox = document.getElementById('myTextbox');
+      let text = document.getElementById('myTextbox1')
+      if (dropdown.value === 'Delivered') {
+        textbox.style.display = 'block';
+        textbox.setAttribute('required', '');
+        text.style.display = 'block';
+      } else {
+        textbox.style.display = 'none';
+        text.style.display = 'none';
+      }
+    }
+</script>
+
+
+{% if not tasks.task_id %}
+<script type="">
+  var names = {{ name | tojson  }};
+  var sortedNames = names.sort();
+  var name_input = document.getElementById("name_lit");
+  name_input.addEventListener("keyup", (e) => {
+      removename();
+      for (var i of sortedNames) {
+          if (
+          i.toLowerCase().startsWith(name_input.value.toLowerCase()) &&
+          name_input.value != ""
+        ) {
+          var listItem = document.createElement("li");
+          listItem.classList.add("list-items");
+          listItem.style.cursor = "pointer";
+          listItem.setAttribute("onclick", "displayNames('" + i + "')");
+          var word1 = "<b>" + i.substr(0, name_input.value.length) + "</b>";
+          word1 += i.substr(name_input.value.length)
+          listItem.innerHTML = word1;
+          document.querySelector(".list").appendChild(listItem);
+      
+        }
+      }
+    });
+    function displayNames(value) {
+      name_input.value = value;
+      removename();
+    }
+    function removename() {
+      var items = document.querySelectorAll(".list-items");
+      items.forEach((item) => {
+        item.remove();
+      });
+    }
+   
+  
+  </script>
+  
+
+  
+<script type="">
+  var phone = {{ phone | tojson  }};
+    var sortedphone = phone.sort();
+    var phone_input = document.getElementById("phone_lit");
+    phone_input.addEventListener("keyup", (e) => {
+        removephone();
+        for (var k of sortedphone) {
+      
+          if (
+            k.toLowerCase().startsWith(phone_input.value.toLowerCase()) &&
+            phone_input.value != ""
+          ) {
+            var listItem1 = document.createElement("li");
+            listItem1.classList.add("list1-items");
+            listItem1.style.cursor = "pointer";
+            listItem1.setAttribute("onclick", "displayNames('" + k + "')");
+            var word = "<b>" + k.substr(0, phone_input.value.length) + "</b>";
+            word += k.substr(phone_input.value.length)
+            listItem1.innerHTML = word;
+            document.querySelector(".list1").appendChild(listItem1);
+          }
+        }
+      });
+      function displayNames(value) {
+        phone_input.value = value;
+        removephone();
+      }
+      function removephone() {
+        var item = document.querySelectorAll(".list1-items");
+        item.forEach((item) => {
+          item.remove();
+        });
+      }
+     
+    
+    </script>
+{% endif %}
+
+{% endblock %}

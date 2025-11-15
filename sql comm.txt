@@ -1,0 +1,15 @@
+drop database service;
+
+create database service;
+
+use service;
+
+show tables;
+
+
+insert into admins value(1,'kk','kk','kk','1234567889');
+
+
+CREATE USER 'karthik'@'localhost' IDENTIFIED BY 'password';
+
+GRANT ALL PRIVILEGES ON *.* TO 'karthik'@'localhost' WITH GRANT OPTION;

@@ -1,0 +1,181 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard{%endblock %}
+{% block extra_head %}
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block inner_content %}
+
+
+{% include "sidebar_new_admin.html" %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='autosuggest.css') }}" />
+<div class="page-content p-4" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+
+
+    <div class="container-fluid right-content">
+        <!-- Add non-sidebar contents here -->
+
+        <h1 class="h2">Partners</h1>
+
+        {% for error in errors %}
+        <div class="alert alert-danger" style="width: 250px;" role="alert">
+            {{error}}
+        </div>
+        {% endfor -%}
+
+        
+        <!-- How to make this a popup? -->
+        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#submitIdea">Add Partners</button>
+
+        <form action="/admin/partners" method="post">
+            <div class="input-group" style="padding-top: 10px;">
+                <input type="hidden" name="ftype" value="on" />
+
+
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <input type="search" style="text-transform: capitalize;" placeholder="partner" id="partner" class="form-control" name="fpartner" />
+                    <ul class="list"></ul>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <form method="POST"  autocomplete="off">
+            <div id="submitIdea" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="submitIdeaBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="submitIdeaBackdropLabel">Add Partners</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <div class="mb-3">
+
+                                <input type="text"  style="text-transform: capitalize;"class="form-control" placeholder="Name" name="partner_name" required>
+                            </div>
+                            
+                            <div class="mb-3">
+
+                                <input type="text"  style="text-transform: capitalize;"class="form-control" placeholder="Phone No" name="phone_no" required>
+                            </div>
+                            
+                            <div class="mb-3">
+
+                                <input type="text"  style="text-transform: capitalize;"class="form-control" placeholder="Address"  autocomplete="off" name="partner_address" required />
+                            </div>
+
+                            <button type="submit" class="btn btn-dark">Submit</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+        <script>
+            $(document).ready(function() {
+              $('input').attr('autocomplete', 'off');
+            });
+          </script>
+        <div class="table-responsive">
+            <br>
+            <h2 class="h3">Partners</h2>
+            <table id="myTable" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">P.ID</th>
+                        <th scope="col">Name</th>
+                        
+                        <th scope="col">Phone No</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Work</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+
+                    {% for partn in partners -%}
+                    <tr>
+                        <th scope="row">
+                            <p style="text-transform: capitalize;" style="text-transform: capitalize;">{{ partn.partner_id }}</p>
+                        </th>
+                        <td>
+                            <p style="text-transform: capitalize;" style="text-transform: capitalize;" style="text-transform: capitalize;">{{ partn.partner_name }}</p>
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;" style="text-transform: capitalize;">{{ partn.phone_no }}</p>
+
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;" style="text-transform: capitalize;">{{ partn.partner_address }}</p>
+
+                        </td>
+                        <td>
+                            
+                            <a href="{{ url_for('partner_work_view',partner_id=partn.partner_id) }}"><button role="button"
+                                class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#viewtask">View</button></a>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+    </div>
+    </main>
+
+
+<script type="">
+var names = {{ name | tojson  }};
+    var sortedNames = names.sort();
+    var name_input = document.getElementById("partner");
+    name_input.addEventListener("keyup", (e) => {
+        removename();
+        for (var i of sortedNames) {
+            if (
+            i.toLowerCase().startsWith(name_input.value.toLowerCase()) &&
+            name_input.value != ""
+          ) {
+            var listItem = document.createElement("li");
+            listItem.classList.add("list-items");
+            listItem.style.cursor = "pointer";
+            listItem.setAttribute("onclick", "displayNames('" + i + "')");
+            var word1 = "<b>" + i.substr(0, name_input.value.length) + "</b>";
+            word1 += i.substr(name_input.value.length)
+            listItem.innerHTML = word1;
+            document.querySelector(".list").appendChild(listItem);
+          }
+        }
+      });
+      function displayNames(value) {
+        name_input.value = value;
+        removename();
+      }
+      function removename() {
+        var items = document.querySelectorAll(".list-items");
+        items.forEach((item) => {
+          item.remove();
+        });
+      }
+    
+</script>
+
+
+    {% endblock %}

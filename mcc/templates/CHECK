@@ -1,0 +1,65 @@
+
+
+<!---
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+</head>
+<body>
+    <h2>Draw Your Signature</h2>
+    <canvas id="signatureCanvas"></canvas>
+    <button id="clearButton">Clear</button>
+    <button id="saveButton">Save</button>
+
+
+    <script>
+        var canvas = document.getElementById('signatureCanvas');
+        var signaturePad = new SignaturePad(canvas);
+
+        document.getElementById('clearButton').addEventListener('click', function () {
+            signaturePad.clear();
+        });
+
+        document.getElementById('saveButton').addEventListener('click', function () {
+            if (!signaturePad.isEmpty()) {
+                var signatureData = signaturePad.toDataURL();
+                $.post('/sign', { signature: signatureData }, function (data) {
+                    alert(data);
+                });
+            } else {
+                alert('Please draw your signature before saving.');
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <h2>Signature</h2>
+    <canvas id="signatureCanvas"></canvas>
+    <script>
+        var canvas = document.getElementById('signatureCanvas');
+        var context = canvas.getContext('2d');
+        var signatureData = "{{ signature.signature }}";
+
+        var image = new Image();
+        image.src = signatureData;
+        image.onload = function () {
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        };
+    </script>
+</body>
+</html>
+-->

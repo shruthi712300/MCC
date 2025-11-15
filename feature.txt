@@ -1,0 +1,13 @@
+
+2. display table edit (add filter buttons)
+
+3. add table items for storing onsite materail
+
+
+5. display no rows when table is empty
+
+6. partner not available
+
+7. if product Delivered recieve delivery date
+
+8. Chage table for instore

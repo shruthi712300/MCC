@@ -1,0 +1,74 @@
+{% extends "layout.html" %} 
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard-styles.css') }}" />
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+
+{% endblock %} 
+{% block inner_content %}
+
+{% include "sidebar_admin.html" %}
+
+<div class="page-content p-5" id="content">
+<div class="content">
+    <h1>Instore</h1>
+</div>
+<input type="text" 
+ style="text-transform: capitalize;"id="tags">
+
+
+<nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Settings</li>
+    </ol>
+</nav>
+<style>
+    table {
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+
+    #addRowBtn {
+      margin-top: 10px;
+    }
+  </style>
+
+  <form id="myForm"  method="POST">
+    <table id="myTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John</td>
+          <td>25</td>
+        </tr>
+        <tr>
+          <td>Jane</td>
+          <td>30</td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" id="addRowBtn" onclick="addRow()">Add New Row</button>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    function addRow() {
+      var table = document.getElementById("myTable");
+      var row = table.insertRow(table.rows.length);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      cell1.innerHTML = "<input type='text' name='name[]'>";
+      cell2.innerHTML = "<input type='text' name='age[]'>";
+    }
+  </script>
+{% endblock %}

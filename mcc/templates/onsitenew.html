@@ -1,0 +1,152 @@
+{% extends "layout.html" %} 
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %} 
+{% block inner_content %}
+
+
+
+{% include "sidebar_new_admin.html" %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='autosuggest.css') }}" /> 
+
+<div class="page-content p-4" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+
+
+                    
+        <h1 class="h2" style="padding-left: 20px;">Onsite New</h1>
+
+
+        <a href="{{ url_for('onsitenew_add') }}">
+        <button class="btn btn-dark"  data-bs-toggle="modal" data-bs-target="#add_task">Add Task</button>
+              </button></a>             
+          </div>
+        
+          <form action="/admin/onsitenew" method="post">
+            <div class="input-group" style="padding-top: 10px;">
+                <input type="hidden" name="ftype" value="on" />
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>Creation Date</label>
+                    <input type="date" id="form1" class="form-control" name="fdate" />
+
+                </div>
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>Service Date</label>
+                    <input type="date" id="form1" class="form-control" name="fon_service_date" />
+                </div>
+                
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>Customer Phone No</label>
+                    <input type="search" size="5" placeholder="Phone" id="phone_lit" class="form-control" name="fphone" autocomplete="off"/>
+                    <ul class="list1"></ul>
+
+                </div>
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>Engineer</label>
+                    <input type="search" style="text-transform: capitalize;" size="7" placeholder="Engineer" id="form1" class="form-control" name="ftechnician" />
+
+                </div>
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>OS.ID</label>
+                    <input type="search" size="5" placeholder="OS.ID" id="form1" class="form-control" name="fid" />
+
+                </div>
+                
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>Service Type</label>
+                    
+                <select class="form-control" name="fstype" > 
+                    <option value="">Select an Service Type</option>
+                    <option value="service" id="service">Service</option>                    
+                    <option value="chiplevel" id="chiplevel">ChipLevel</option>
+                    <option value="warranty" id="warranty">Warranty</option>
+                </select>
+                </div>
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>Status</label>
+                    <select class="form-control" name="fstatus" > 
+                    <option value="">Status</option>
+                    <option value="open" id="open">Open</option>
+                    <option value="ready" id="ready">Ready</option>
+                    <option value="delivered" id="delivered">Delivered</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    
+        <div class="d-none d-md-block"> <!-- Table for large screens -->
+            <div class="table-responsive">
+                <br>
+                <h2 class="h3">Work</h2>
+                <table id="myTable" class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ON.ID<a type="button" href="{{ url_for('instore_add_task_view') }}"> AA</a></th>
+                            <th scope="col">Creation Date</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Urgency Level</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">View</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in onsitenew %}
+                        <tr>
+                            <td>{{ task.task_id }}</td>
+                            <td><p style="text-transform: capitalize;">{{ task.creation_date }}</p></td>
+                            <td><p style="text-transform: capitalize;">{{ task.cname }}</p></td>
+                            <td><p style="text-transform: capitalize;">{{ task.urgency }}</p></td>
+                            <td><p style="text-transform: capitalize;">{{ task.status }}</p></td>
+                            <td>
+                                <a href="{{ url_for('onsitenew_task_view_by_id', task_id=task.task_id) }}">
+                                    <button role="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewtask">View</button>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Cards for mobile view -->
+        <div class="d-block d-md-none">
+            <br>
+            <h2 class="h3">Work</h2>
+            <div class="row">
+                {% for task in onsitenew %}
+                <div class="col-12 mb-3">
+                    <div class="card shadow-sm p-3">
+                        <h5 class="card-title">Task ID: {{ task.task_id }}</h5>
+                        <p class="mb-1"><strong>Service Date</strong>{{ task.on_service_date }}</p>
+                        <p class="mb-1"><strong>Customer Name:</strong> {{ task.cname }}</p>
+                        <p class="mb-1"><strong>Urgency Level:</strong> {{ task.urgency }}</p>
+                        <p class="mb-1"><strong>Status:</strong> {{ task.status }}</p>
+                        <a href="{{ url_for('onsitenew_task_view_by_id', task_id=task.task_id) }}" class="btn btn-primary btn-sm mt-2">View</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+</div>
+</main>
+
+        
+
+{% endblock %}

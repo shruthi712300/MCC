@@ -1,0 +1,154 @@
+{% extends "layout.html" %}
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard-styles.css') }}" />
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block inner_content %}
+
+{% include "sidebar_admin.html" %}
+
+
+<div class="page-content p-5" id="content">
+    <!-- Toggle button -->
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i
+            class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold"></small></button>
+
+    <div class="container-fluid right-content">
+        <!-- Add non-sidebar contents here -->
+
+        <h1 class="h2">Quotation</h1>
+
+
+        <!-- How to make this a popup? -->
+        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#add_task">Create Quotation</button>
+        <form action="/admin/onsite" method="post">
+            <div class="input-group" style="padding-top: 10px;">
+                <input type="hidden" name="ftype" value="on" />
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <input type="date" id="form1" class="form-control" name="fdate" />
+
+                </div>
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <input type="search" placeholder="Phone" id="form1" class="form-control" name="fphone" />
+
+                </div>
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <input type="search" placeholder="Technician" id="form1" class="form-control" name="ftechnician" />
+
+                </div>
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <input type="search" placeholder="OS.ID" id="form1" class="form-control" name="fid" />
+
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <form id="add" method="post">
+            <div id="add_task" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="submitIdeaBackdropLabel" aria-hidden="true">
+                <!-- Popup contents, todo, make this actual pop on the prev button is clicked -->
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="submitIdeaBackdropLabel">Add Task</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+
+                                <input type="date" class="form-control" name="date" required>
+                            </div>
+
+                            <div class="mb-3">
+
+                                <input type="text" 
+ style="text-transform: capitalize;"list="customer_name" class="form-control" placeholder="Customer Name"
+                                    name="customer_name" required>
+                                {% for cus in customers -%}
+                                <datalist id="customer_name">
+                                    <option value="{{ cus.name }}">{{ cus.name }}</option>
+
+                                </datalist>
+                                {% endfor -%}
+                            </div>
+                            <div class="mb-3">
+
+                                <input type="text" 
+ style="text-transform: capitalize;"list="phone_no" class="form-control" placeholder="Phone No"
+                                    name="phone_no" required>
+                                {% for cus in customers -%}
+                                <datalist id="phone_no">
+                                    <option value="{{ cus.phone_no }}">{{ cus.phone_no }}</option>
+
+                                </datalist>
+                                {% endfor -%}
+                            </div>
+
+                            <div class="mb-3">
+
+                                <input type="text" 
+ style="text-transform: capitalize;"class="form-control" placeholder="Address" name="address" required>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-dark">Add</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+        <div class="table-responsive">
+            <br>
+            <h2 class="h3">Quotation</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Quotation No.</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">View</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for quot in quotation -%}
+                    <tr>
+                        <td>
+                            {{ quot.quotation_no }}
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ quot.date }}</p>
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ quot.customer.name }}</p>
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;"></p>
+                        </td>
+
+
+                        
+                    </tr>
+
+                    {% endfor -%}
+                </tbody>
+            </table>
+
+        </div>
+
+
+    </div>
+    </main>
+
+
+
+    {% endblock %}

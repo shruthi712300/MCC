@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard{%endblock %}
+{% block extra_head %}
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block inner_content %}
+
+
+{% include "sidebar_new_admin.html" %}
+
+<div class="page-content p-5" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+
+    <div class="container-fluid right-content">
+        <!-- Add non-sidebar contents here -->
+
+        <h1 class="h2">Engineers</h1>
+
+        {% for error in errors %}
+        <div class="alert alert-danger" style="width: 250px;" role="alert">
+            {{error}}
+        </div>
+        {% endfor -%}
+
+        <!-- How to make this a popup? -->
+        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#submitIdea">Add Engineer</button>
+
+        <form action="/admin/technician" method="post" >
+            <div class="input-group" style="padding-top: 10px;">
+                <input type="hidden" name="ftype" value="on" />
+
+
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <input type="search" placeholder="Engineer" id="form1" class="form-control" name="ftechnician" />
+
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+<script type="text/javascript">
+document.autosubmit.submit();
+</script>
+        <form method="POST"  autocomplete="off">
+            <div id="submitIdea" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="submitIdeaBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="submitIdeaBackdropLabel">Add Engineer</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <div class="mb-3">
+
+                                <input type="text"  style="text-transform: capitalize;"class="form-control"  placeholder="Name" name="name"  required>
+                            </div>
+                            <div class="mb-3">
+
+                                <input type="text"  style="text-transform: capitalize;"class="form-control" placeholder="Username"  autocomplete="off" name="username" required />
+                            </div>
+                            <div class="mb-3">
+
+                                <input type="password" class="form-control" placeholder="Password"  autocomplete="off" name="password"
+                                    required />
+                            </div>
+                            <div class="mb-3">
+
+                                <input type="text" 
+ style="text-transform: capitalize;"class="form-control" placeholder="Phone No" name="phone_no" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-dark">Submit</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+        <script>
+            $(document).ready(function() {
+              $('input').attr('autocomplete', 'off');
+            });
+          </script>
+        <div class="table-responsive">
+            <br>
+            <h2 class="h3">Engineer</h2>
+            <table id="myTable"class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">T.ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Username</th>
+
+                        <th scope="col">Phone No</th>
+                        <th scope="col">Work</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+
+                    {% for tech in technicians -%}
+                    <tr>
+                        <th scope="row">
+                            <p style="text-transform: capitalize;">{{ tech.technician_id }}</p>
+                        </th>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ tech.name }}</p>
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ tech.username }}</p>
+                        </td>
+
+                        <td>
+                            <p style="text-transform: capitalize;">{{ tech.phone_no }}</p>
+
+                        </td>
+                        <td>
+                            <a href="{{ url_for('technician_task_view', technician_id=tech.technician_id) }}"><button
+                                    role="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#viewtask">Work</button></a>
+                        
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+    </div>
+    </main>
+
+
+
+
+    {% endblock %}

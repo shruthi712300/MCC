@@ -1,0 +1,100 @@
+{% extends "layout.html" %} 
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard-styles.css') }}" />
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %} 
+{% block inner_content %}
+
+{% include "sidebar_new_admin.html" %}
+
+<div class="page-content p-5" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+    <!-- Toggle button -->
+    <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold"></small></button>
+  
+    <div class="container-fluid right-content">
+        
+        <h1 class="h2">Warranty</h1>
+          </div>        
+          
+          <form action="/admin/warranty" method="post">
+            <div class="input-group" style="padding-top: 10px;">
+                <input type="hidden" name="ftype" value="on" />
+                
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>WR.ID</label>
+                    <input type="search"  placeholder="WR.ID" id="form1" class="form-control" name="fid" />
+                </div>
+
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>Partner Name</label>
+                    <input type="search" style="font-family: 'Times New Roman', serif;text-transform: capitalize; " placeholder="Partner Name" id="form1" class="form-control" name="fpartnername" />
+
+                </div>
+                
+            <div class="form-outline" style="padding-left: 10px; padding-top: 31px;">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            </div>
+        </form>
+
+    
+        <div class="table-responsive"> 
+            <br>
+            <h2 class="h3">Work</h2>
+            <table id="myTable" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">WR.ID</th>
+                        <th scope="col">Partner Name</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">View</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for warranty in warranty -%}
+                    <tr>
+                        <td>
+                            {{ warranty.task_id }}
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ warranty.partners.partner_name }}</p>
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ warranty.instoretask.customer.name }}</p>
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ warranty.status }}</p>
+                        </td>
+                        
+                        
+                        
+                        <td>
+        
+                            <a href="{{ url_for('instore_task_view_by_id', task_id=warranty.task_id) }}"><button role="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"  data-bs-target="#viewtask">View</button></a>
+                        </td>
+                    </tr>
+
+                    {% endfor -%}
+                </tbody>
+            </table>
+            
+        </div>
+
+        
+</div>
+</main>
+
+        
+
+{% endblock %}
