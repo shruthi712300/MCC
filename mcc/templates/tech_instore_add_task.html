@@ -1,0 +1,181 @@
+{% extends "layout.html" %} 
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard-styles.css') }}" />
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %} 
+{% block inner_content %}
+
+{% include "sidebar_new_technician.html" %}
+
+<div class="page-content p-4" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+   
+    <a href="{{ url_for('tech_instore') }}"><i class="fa fa-chevron-circle-left fa-3x" ></i>
+    </a><br>
+
+    <div class="container-fluid right-content">
+<form  method="post" >
+      <div class="row">
+        <div class="col"><h1>Add Task</h1></div>
+        <div class="col">
+    <button class="btn btn-dark" role="submit" data-bs-toggle="modal" data-bs-target="#">Save</button>
+<!----
+    {% if flag and tasks.service_type=='Chiplevel' %}
+    <a href="{{ url_for('chiplevel_add',  task_id=tasks.task_id) }}">
+    <button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#">Chiplevel</button></a>
+    {% endif %}
+    {% if flag and tasks.service_type=='Warranty' %}
+    <a href="{{ url_for('warranty_add' , task_id=tasks.task_id) }}">
+    <button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#">Warranty</button></a>
+    {% endif %}
+    </div>
+    -->
+  </div>
+  
+
+
+
+    <div class="row">
+        <div class="col">
+          <label>Date</label>
+          <input type="Date" name="date" value='{{tasks.date if flag }}' class="form-control" required>
+        </div>
+        <div class="col">
+          <label>Status</label>
+          <select class="form-control" name="status">
+            {% for status in ["open","ready","Delivered"] %}
+            <option value={{status}} {{  'selected' if flag and status==tasks.status  }}>{{status}}</option>
+            {% endfor %}
+        </select>
+        </div>
+        
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Customer Name</label>
+          <input type="text" 
+ style="text-transform: capitalize;"name="customer_name" value="{{ tasks.customer.name  if flag}}"  class="form-control" required>
+        </div>
+        <div class="col">
+          <label>Phone No</label>
+          <input type="number" name="phone_no" value='{{ tasks.customer.phone_no  if flag }}' class="form-control" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Type</label>
+          <select class="form-control" name="service_type" required>
+            <option value="" id="installation">Select an option</option>
+            {% for work in ["Service","Chiplevel","Warranty"] %}
+            <option value={{work}} {{  'selected' if  flag and work == tasks.service_type   }}>{{work}}</option>
+            {% endfor %}
+        </select>
+          
+        </div>
+        <div class="col">
+          <label>Technician</label>
+          <select class="form-control" name="technician_id" required>
+            <option value="{{technician.technician_id}}">{{technician.name}}</option>
+            <!----
+            {% for technician in technicians -%}
+            <option value={{technician.technician_id}} {{"{{ 'selected' if tech == technician.technician_id }}" if flag }}  id="installation">{{ technician.name }}</option>
+            {% endfor -%}---->
+        </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Est Days</label>
+          <input type="number" name="est_days" value='{{ tasks.est_days  if flag and tasks.est_days}}' class="form-control" required>
+        </div>
+        <div class="col">
+          <label>Est Charges</label>
+          <input type="number" name="est_charge" value='{{ tasks.est_charge  if flag and tasks.est_charge}}'  class="form-control" required>
+        </div>
+        
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Service Charges</label>
+          <input type="number" name="final_charge" value='{{ tasks.final_charge if flag and tasks.final_charge}}'  class="form-control">
+        </div>
+        <div class="col">
+          <label>Recived Charges</label>
+          <input type="number" name="recived_charge" value='{{ tasks.recived_charge  if flag and tasks.recived_charge}}'  class="form-control">
+        </div>
+        
+      </div>
+      
+
+      <h1>Product Details</h1>
+
+      <div class="row">
+        <div class="col">
+          <label>Product Type</label>
+          <select class="form-control" name="product_name" required>
+            <option value="" id="product_name">Select an option</option>
+            {% for product_name in ["Laptop","Desktop CPU","Printer","Monitor","CCTV", "PC Accessories","Other Accessories"] -%}
+            <option value={{product_name}} id="product_name">{{ product_name }}</option>
+            {% endfor -%}
+        </select>
+        </div>
+        <div class="col">
+          <label>Product Model</label>
+          <input type="text" 
+ style="text-transform: capitalize;"name="product_company" value='{{ tasks.product.product_company  if flag}}'  class="form-control" required>
+        </div>
+      </div>
+ 
+      <div class="row">
+        <div class="col">
+          <label>Problem</label>
+          <input type="text" 
+ style="text-transform: capitalize;"name="problem" value='{{ tasks.problem  if flag}}'  class="form-control" required >
+        </div>
+        <div class="col">
+          <label>Product Details</label>
+          <input type="text" 
+ style="text-transform: capitalize;"name="product_details" value='{{ tasks.product_details  if flag}}'  class="form-control" required>
+        </div>
+      </div>
+   
+      <div class="row">
+        <div class="col">
+          <label>Items Received</label>
+          <input type="text" 
+ style="text-transform: capitalize;"name="items_received" value='{{ tasks.items_received  if flag}}' class="form-control" required> 
+        </div>
+        <div class="col">
+          <label>Serial No</label>
+          <input type="text" 
+ style="text-transform: capitalize;"name="serial_no" value='{{ tasks.serial_no  if flag}}'  class="form-control" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Remarks</label>
+          <input type="text" 
+ style="text-transform: capitalize;"name="remarks" value='{{ tasks.remarks if flag}}' class="form-control">
+        </div>
+        
+        
+      </div>
+    </form>
+
+      
+    </div>
+</div>
+
+{% endblock %}

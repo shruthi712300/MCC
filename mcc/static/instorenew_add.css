@@ -1,0 +1,23 @@
+.row_view{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    /* width: 100%; */
+}
+
+.col_view{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-right: 20px;
+}
+
+.instore-input{
+    /* width: 350px; */
+}
+@media (max-width: 768px) {
+    .row_view{
+        display: flex;
+        flex-direction: column;
+    }
+}

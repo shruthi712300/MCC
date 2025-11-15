@@ -1,0 +1,182 @@
+{% extends "layout.html" %} 
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %} 
+{% block inner_content %}
+
+
+{% include "sidebar_new_admin.html" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='autosuggest.css') }}" />
+<div class="page-content p-4" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+
+
+                    
+
+    
+    <h1>Customers</h1>
+    <div class="input-group" style="padding-top: 10px;">
+        
+      <form action="/admin/customers" method="post">
+        <div class="input-group" style="padding-top: 10px;">
+            <input type="hidden" name="ftype" value="on" />
+            
+            <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                <label>Customer Phone No</label>
+                <input type="search"  placeholder="Phone" id="phone_lit" class="form-control" name="fphone" autocomplete="off" />
+                <ul class="list1"></ul>
+            </div>
+            <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+              <label>Customer Name</label>
+              <input type="search"  placeholder="Name" id="name_lit" class="form-control" name="fname" autocomplete="off"/>
+              <ul class="list"></ul>
+
+          </div>
+            <div class="form-outline" style="padding-left: 10px; padding-top: 31px;">
+                <button type="submit"  class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+    
+
+    <div class="table-responsive">
+      <br>
+      
+      <table id="myTable" class="table">
+          <thead>
+              <tr>
+                  <th scope="col">C.ID</th>
+                  <th scope="col">Customer Name</th>
+                  <th scope="col">Phone No</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">View Work</th>
+              </tr>
+          </thead>
+          <tbody class="table-group-divider">
+      
+              {% for cust in customers -%}
+              <tr>
+                  <th scope="row">
+                      <p style="text-transform: capitalize;">{{ cust.customer_id }}</p>
+                  </th>
+                  <td>
+                      <p style="text-transform: capitalize;">{{ cust.name }}</p>
+                  </td>
+                  <td>
+                      <p style="text-transform: capitalize;">{{ cust.phone_no }}</p>
+                  </td>
+                  <td>
+                      <p style="text-transform: capitalize;">{{ cust.address }}</p>
+
+                  </td>
+                  <td>
+                    
+                    <a href="{{ url_for('customer_task_view', customer_id=cust.customer_id) }}"><button
+                      role="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                      data-bs-target="#viewtask">View</button></a>
+
+          
+                  </td>
+              </tr>
+              {% endfor %}
+
+          </tbody>
+      </table>
+
+  </div>
+
+   
+  
+  </div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!--------NAMES------->
+
+<script type="">
+var names = {{ name | tojson  }};
+var sortedNames = names.sort();
+var name_input = document.getElementById("name_lit");
+name_input.addEventListener("keyup", (e) => {
+    removename();
+    for (var i of sortedNames) {
+        if (
+        i.toLowerCase().startsWith(name_input.value.toLowerCase()) &&
+        name_input.value != ""
+      ) {
+        var listItem = document.createElement("li");
+        listItem.classList.add("list-items");
+        listItem.style.cursor = "pointer";
+        listItem.setAttribute("onclick", "displayNames('" + i + "')");
+        var word1 = "<b>" + i.substr(0, name_input.value.length) + "</b>";
+        word1 += i.substr(name_input.value.length)
+        listItem.innerHTML = word1;
+        document.querySelector(".list").appendChild(listItem);
+      }
+    }
+  });
+  function displayNames(value) {
+    name_input.value = value;
+    removename();
+  }
+  function removename() {
+    var items = document.querySelectorAll(".list-items");
+    items.forEach((item) => {
+      item.remove();
+    });
+  }
+ 
+
+</script>
+
+
+<!--------PHONE NO------>
+
+<script type="">
+var phone = {{ phone | tojson  }};
+  var sortedphone = phone.sort();
+  var phone_input = document.getElementById("phone_lit");
+  phone_input.addEventListener("keyup", (e) => {
+      removephone();
+      for (var k of sortedphone) {
+    
+        if (
+          k.toLowerCase().startsWith(phone_input.value.toLowerCase()) &&
+          phone_input.value != ""
+        ) {
+          var listItem1 = document.createElement("li");
+          listItem1.classList.add("list1-items");
+          listItem1.style.cursor = "pointer";
+          listItem1.setAttribute("onclick", "displayNames('" + k + "')");
+          var word = "<b>" + k.substr(0, phone_input.value.length) + "</b>";
+          word += k.substr(phone_input.value.length)
+          listItem1.innerHTML = word;
+          document.querySelector(".list1").appendChild(listItem1);
+        }
+      }
+    });
+    function displayNames(value) {
+      phone_input.value = value;
+      removephone();
+    }
+    function removephone() {
+      var item = document.querySelectorAll(".list1-items");
+      item.forEach((item) => {
+        item.remove();
+      });
+    }
+   
+  
+  </script>
+{% endblock %}

@@ -1,0 +1,170 @@
+{% extends "layout.html" %}
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard-styles.css') }}" />
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block inner_content %}
+
+{% include "sidebar_new_technician.html" %}
+
+<div class="page-content p-4" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+
+
+    <div class="container-fluid right-content">
+        <!-- Add non-sidebar contents here -->
+
+        <h1 class="h2">Work</h1>
+
+        {% for error in errors %}
+        <div class="alert alert-danger" style="width: 250px;" role="alert">
+            {{error}}
+        </div>
+        {% endfor -%}
+
+        <!-- How to make this a popup? -->
+        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#add_task">Add Work</button>
+        <form action="/tech/work" method="post">
+            <div class="input-group" style="padding-top: 10px;">
+                <input type="hidden" name="ftype" value="on" />
+                <div class="form-outline" style="padding-left: 10px;padding-bottom: 5px;">
+                    <label>Service Date</label>
+                    <input type="date" id="form1" class="form-control" name="fdate" />
+
+                </div>
+                
+                
+                <div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            
+        </form>
+        
+
+        <div class="table-responsive">
+            <br>
+            <h2 class="h3">Work</h2>
+            <table id="myTable"class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Work.ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for task in work -%}
+                    <tr>
+                        <td>
+                            {{ task.work_id }}
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ task.service_date }}</p>
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ task.customer_name }}</p>
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ task.status }}</p>
+                        </td>
+
+                    </tr>
+
+                    {% endfor -%}
+                </tbody>
+            </table>
+
+        </div> 
+
+
+        <form id="add" method="post">
+            <div id="add_task" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="1"
+                aria-labelledby="submitIdeaBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="submitIdeaBackdropLabel">Add Work</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            
+                            <div >
+                                <label>Service Date</label>
+                                <input type="date"  class="form-control" name="service_date" required>
+                            </div>
+
+                            <div >
+                                <label>Customer Name</label>
+                                <input type="text"  style="text-transform: capitalize;"style="text-transform: capitalize;" list="customer_name" class="form-control" placeholder="Customer Name"
+                                    name="customer_name" required>
+                                </div>
+                            <div >
+                                <label>Service Type</label>
+                                <select class="form-control" name="service_type" required> 
+                                    <option value="">Select an Service Type</option>
+                                    <option value="installation" id="installation">Installation</option>
+                                    <option value="service" id="service">Service</option>
+                                    <option value="warranty" id="warranty">Warranty</option>
+                                </select>
+                            </div>
+
+                            <div >
+                                <label>Problem</label>
+                                <input type="text" style="text-transform: capitalize;"class="form-control" placeholder="problem" name="problem" required>
+                            </div>
+
+                            <div>
+                                <label>Service Start Time</label>
+                                <input type="time" class="form-control" name="start_time" required>
+                            </div>
+
+                            <div >
+                                <label>Service End Time</label>
+                                <input type="time" class="form-control" name="end_time" required>
+
+                            <div >
+                                <label>Service Charges</label>
+                                <input type="text" style="text-transform: capitalize;"class="form-control" placeholder="Service Charges" name="servicecharges" required>
+                            </div>
+
+                            
+                            <div >
+                                <label>Received Amount</label>
+                                <input type="text" style="text-transform: capitalize;"class="form-control" placeholder="Received Charges" name="receivedamount" required>
+                            </div>
+
+                            <div >
+                                <label>Status</label>
+                                <select class="form-control" name="status" required> 
+                                    <option value="">Select an Status</option>
+                                    <option value="pending" id="pending">Pending</option>
+                                    <option value="completed" id="completed">Completed</option>
+                                </select>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-dark">Add</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    </main>
+
+
+
+    {% endblock %}

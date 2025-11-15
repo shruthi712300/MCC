@@ -1,0 +1,290 @@
+{% extends "layout.html" %}
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block inner_content %}
+
+{% include "sidebar_new_admin.html" %}
+
+<div class="page-content p-4" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+
+  <a href="{{ url_for('onsite') }}"><i class="fa fa-chevron-circle-left fa-3x"></i>
+  </a><br>
+
+
+  <div class="container-fluid right-content">
+
+    {% if message %}
+    <div class="alert alert-danger" style="width: 250px;" role="alert">
+      {{message}}
+    </div>
+    {% endif -%}
+
+    
+    {% for error in errors %}
+    <div class="alert alert-danger" style="width: 250px;" role="alert">
+        {{error}}
+    </div>
+    {% endfor -%}
+
+
+    <form method="post" action="{{ url_for('onsite_task_update', task_id=tasks.task_id) }}">
+      <div class="row">
+        <div class="col">
+          <h1>View Task</h1>
+        </div>
+        <div class="col">
+          <!a href="{{ url_for('onsite_download_report',task_id=tasks.task_id) }}" target="_blank"><!button type="button"
+              class="btn btn-dark">Download<!/button><!/a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <h3 style="font-family: 'Times New Roman', serif; ">Task ID</label>
+        </div>
+        <div class="col">
+          <h3 style="font-family:  Tahoma, sans-serif;text-transform: capitalize;">{{ tasks.task_id }}</h3>
+        </div>
+        <div class="col">
+          <h3 style="font-family: 'Times New Roman', serif; ">Task Created</label>
+        </div>
+        <div class="col">
+          <h3 style="font-family:  Tahoma, sans-serif;text-transform: capitalize;">{{ tasks.creation_date }}</h3>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <h3 style="font-family: 'Times New Roman', serif; ">Service Date</h3>
+        </div>
+        <div class="col">
+          <h3 style="font-family:  Tahoma, sans-serif;">{{ tasks.date }}</h3>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+        </div>
+      </div>
+  </div>
+
+
+
+  <div class="row">
+    <div class="col">
+      <h3 style="font-family: 'Times New Roman', serif;">Customer Name</h3>
+    </div>
+    <div class="col">
+      <h3 style="font-family:  Tahoma, sans-serif;text-transform: capitalize;">{{ tasks.customer_name }}</h3>
+    </div>
+    <div class="col">
+      <h3 style="font-family: 'Times New Roman', serif; ">Phone No</h3>
+    </div>
+    <div class="col">
+      <h3 style="font-family:  Tahoma, sans-serif;">{{ tasks.phone_no }}</h3>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col">
+      <h3 style="font-family: 'Times New Roman', serif; ">Engineer 1</h3>
+    </div>
+    <div class="col">
+      <h3 style="font-family:  Tahoma, sans-serif;text-transform: capitalize;">{{ tasks.technician.name }}</h3>
+    </div>
+    <div class="col">
+      <h3 style="font-family: 'Times New Roman', serif;text-transform: capitalize; ">Engineer 2</h3>
+    </div>
+    <div class="col">
+      <h3 style="font-family:  Tahoma, sans-serif;text-transform: capitalize;">{{ tasks.technician2.name }}</h3>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col">
+      <h3 style="font-family: 'Times New Roman', serif;text-transform: capitalize; ">Service Type</h3>
+    </div>
+    <div class="col">
+      <h3 style="font-family:  Tahoma, sans-serif;text-transform: capitalize;">{{ tasks.service_type }}</h3>
+    </div>
+    <div class="col">
+      <h3 style="font-family: 'Times New Roman', serif;text-transform: capitalize; ">Problem</h3>
+    </div>
+    <div class="col">
+      <h3 style="font-family: 'Times New Roman', serif;text-transform: capitalize; ">{{ tasks.problem }}</h3>
+    </div>
+  </div>
+
+  
+  <div class="modal-body">
+    <div class="mb-3">
+      <input type="hidden" style="text-transform: capitalize;" class="form-control" value="0"  placeholder="Materials" name="material"
+        required disabled>
+    </div>
+    <div class="mb-3">
+      <label>Service Charges</label>
+      <input type="text" 
+ style="text-transform: capitalize;"class="form-control" value="{{ resources.service_charge }}" placeholder="Service Charge"
+        name="service_charge" >
+    </div>
+    <div class="mb-3">
+      <label>Received Charges</label>
+      <input type="text" 
+ style="text-transform: capitalize;"class="form-control" value="{{ resources.received_charge }}" placeholder="Received Charge"
+        name="received_charge" >
+    </div>
+    <div class="mb-3">
+      <input type="text"  style="text-transform: capitalize;"class="form-control" value="0" placeholder="Customer Feedback"
+        name="review" required hidden>
+    </div>
+
+
+    <button type="submit" style="max-width: 100px;" class="btn btn-dark">Update</button>
+    <button type="button" data-toggle="modal" style="margin-left: 10px;max-width: 100px;margin-right: 10px;" class="btn btn-dark" data-target="#exampleModalCenter">Close</button>
+  
+  </div>
+
+</form>
+
+  <!--
+  <a href="{{ url_for('tech_onsite_customer_review', task_id=tasks.task_id) }}">
+  <button type="submit" style="max-width: 150px;" class="btn btn-dark">Customer Review</button></a>-->
+  
+<br>
+<br>
+<h1>Materials</h1>
+
+  <table>
+    <thead>
+        <tr>
+            <th>Sl No</th>
+            <th>Item Name</th>
+            <th>Serial No</th>
+            <th>Nos</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody id="data-table">
+      {% for record in data %}
+              <tr>
+                  <td><input type="text" name="sl_no"  value="{{ record.sl_no }}"/></td>
+                  <td><input type="text" name="item_name"  value="{{ record.item_name }}"/></td>
+                  <td><input type="text" name="serial_no"  value="{{ record.serial_no }}" /></td>
+                  <td><input type="text" name="nos"value="{{ record.nos }}"/></td>
+                  <td><select name="mat_status">
+                    <option value="Taken from office" {% if record.mat_status == 'Taken from office' %}selected{% endif %}>Taken from office</option>
+                    <option value="Bill to customer" {% if record.mat_status == 'Bill to customer' %}selected{% endif %}>Bill to customer</option>
+                    <option value="Return to office" {% if record.mat_status == 'Return to office' %}selected{% endif %}>Return to office</option></select></td>
+                  <td><input type="hidden" name="task_id" value="{{ record.task_id }}" /></td>
+                  <td><button class="delete-row">Delete</button></td>
+              </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <button id="addRowButton">Add Row</button>
+  <button id="submitDataButton">Submit Data</button>
+  
+  <script>
+    document.getElementById('addRowButton').addEventListener('click', function () {
+        // Add a new row with input fields
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td><input type="text" name="sl_no" /></td>
+            <td><input type="text" name="item_name" /></td>
+            <td><input type="text" name="serial_no" /></td>
+            <td><input type="text" name="nos" /></td>
+            <td><select name="mat_status"><option value="Taken from office">Taken from office</option><option value="Bill to customer">Bill to customer</option><option value="Return to office">Return to office</option></select></td>
+            <td><input type="hidden" name="task_id" value="{{ tasks.task_id }}" /></td>
+            <td><button class="delete-row">Delete</button></td>
+        `;
+        document.getElementById('data-table').appendChild(newRow);
+    });
+    document.getElementById('submitDataButton').addEventListener('click', function () {
+        const tableData = [];
+        const tableRows = document.querySelectorAll('#data-table tr');
+        tableRows.forEach(function (row, index) {
+            const inputFields = row.querySelectorAll('input,select');
+            if (inputFields.length > 0) {
+                const rowData = {
+                  sl_no: inputFields[0].value,
+                  item_name: inputFields[1].value,
+                  serial_no: inputFields[2].value,
+                  nos: inputFields[3].value,
+                  mat_status: inputFields[4].value,
+                  task_id: inputFields[5].value,
+                };
+                tableData.push(rowData);
+            }
+        });
+  
+        fetch('/receive_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body:JSON.stringify(tableData),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message);
+                    // You can update the UI to show a success message here
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Handle any errors that occur during the POST request
+                });
+        });
+
+        // Add an event listener for the "Delete" buttons
+        document.addEventListener('click', function (event) {
+            if (event.target.classList.contains('delete-row')) {
+                const row = event.target.parentElement.parentElement;
+                row.remove();
+            }
+        });
+    </script>
+
+
+
+<h1></h1>
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Close Task</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you conform that you have completed the task and there is no payment pending.
+        </div>
+        <div class="modal-footer">
+          <a href="{{ url_for('admin_onsite_update_status', task_id=tasks.task_id) }}">
+            <button type="button" action=class="btn btn-primary">Yes, Close Task</button>
+          </a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+</div></div></div>
+{% endblock %}

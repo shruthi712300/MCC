@@ -1,0 +1,148 @@
+{% extends "layout.html" %} 
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard-styles.css') }}" />
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %} 
+{% block inner_content %}
+
+
+{% include "sidebar_new_admin.html" %}
+
+<div class="page-content p-4" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+
+                        
+    <h1>Dashboard</h1>
+                </div>
+    <a href="{{ url_for('instore_download_pending_report') }}" target="_blank"><button type="button"
+        class="btn btn-dark">Task Pending</button></a>
+    
+        <a href="{{ url_for('instore_download_daily_report') }}" target="_blank"><button type="button"
+            class="btn btn-dark">Day Report</button></a>
+        
+            <a href="{{ url_for('work_report') }}" target="_blank"><button type="button"
+                class="btn btn-dark">Daily Work</button></a>
+
+                <a href="{{ url_for('work_report_status') }}" target="_blank"><button type="button"
+                    class="btn btn-dark">Work Pending</button></a>
+
+                    <a href="{{ url_for('onsite_report_weekly') }}" target="_blank"><button type="button"
+                        class="btn btn-dark">Onsite Weekly report</button></a>
+
+                        <a href="{{ url_for('instore_report_weekly') }}" target="_blank"><button type="button"
+                            class="btn btn-dark">Instore Weekly report</button></a>
+            
+    <div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                          Onsite Tasks Pending</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ onsite_task_count }}</div>
+                  </div>
+                  <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+   
+
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                        Open Instore Tasks</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{instore_task_count_open}}</div>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xl-3 col-md-6 mb-4">
+  <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+          <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                    Ready Instore Tasks</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{instore_task_count_pending}}</div>
+              </div>
+              <div class="col-auto">
+                  <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="col-xl-3 col-md-6 mb-4">
+  <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+          <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                    Return Instore Tasks</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{instore_task_count_return}}</div>
+              </div>
+              <div class="col-auto">
+                  <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      Chiplevel Sent</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{get_chiplevel_count_sent}}</div>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      Warranty Sent</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{get_warranty_count_sent}}</div>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+  
+  </div>
+
+
+{% endblock %}

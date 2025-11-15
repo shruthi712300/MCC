@@ -1,0 +1,182 @@
+{% extends "layout.html" %} 
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %} 
+{% block inner_content %}
+{% include "sidebar_new_technician.html" %}
+
+<div class="page-content p-4" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+
+    
+    <a href="{{ url_for('tech_onsite') }}"><i class="fa fa-chevron-circle-left fa-3x" ></i>
+    </a><br>
+  
+    <div class="container-fluid right-content">
+      {% if message %}
+    <div class="alert alert-danger" style="width: 250px;" role="alert">
+      {{message}}
+    </div>
+    {% endif -%}
+
+    {% for error in errors %}
+    <div class="alert alert-danger" style="width: 250px;" role="alert">
+        {{error}}
+    </div>
+    {% endfor -%}
+
+    
+\
+  <div class="row" >
+    <div class="col" >
+      <h1>View Task</h1>
+    </div>
+    
+  </div>
+  <div class="row" >
+    <div class="col" >
+      <h3 style="font-family: 'Times New Roman', serif; ">Task ID</label>
+    </div>
+    <div class="col">
+      <h3 style="font-family:  Tahoma, sans-serif;">{{ tasks.task_id }}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h3 style="font-family: 'Times New Roman', serif; ">Date</h3>
+    </div>
+    <div class="col">
+      <h3 style="font-family:  Tahoma, sans-serif;">{{ tasks.date }}</h3>
+    </div>
+  </div>
+</div>
+
+
+
+    <div class="row">
+        
+        <div class="col">
+          <h3 style="font-family: 'Times New Roman', serif; ">Customer Name</h3>
+        </div>
+        <div class="col">
+          <h3 style="font-family:  Tahoma, sans-serif;">{{ tasks.customer_name }}</h3>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col">
+          <h3 style="font-family: 'Times New Roman', serif; ">Phone No</h3>
+        </div>
+        <div class="col">
+          <h3 style="font-family:  Tahoma, sans-serif;">{{ tasks.customer_phone_no }}</h3>
+        </div>
+      </div>
+
+      
+      <div class="row">
+        
+        <div class="col">
+          <h3 style="font-family: 'Times New Roman', serif; ">Service Type</h3>
+        </div>
+        <div class="col">
+          <h3 style="font-family:  Tahoma, sans-serif;">{{ tasks.service_type }}</h3>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col">
+          <h3 style="font-family: 'Times New Roman', serif; ">Problem</h3>
+        </div>
+        <div class="col">
+          <h3>{{ tasks.problem }}</h3>
+        </div>
+      </div>
+      <div class="row">
+        
+        <div class="col">
+          <h3 style="font-family: 'Times New Roman', serif; ">Materials</h3>
+        </div>
+        <div class="col">
+          <h3 style="font-family:  Tahoma, sans-serif;">{{ resources.material }}</h3>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col">
+          <h3 style="font-family: 'Times New Roman', serif; ">Service Charge</h3>
+        </div>
+        <div class="col">
+          <h3>{{ resources.service_charge }}</h3>
+        </div>
+      </div>
+
+      <div class="row">
+        
+        <div class="col">
+          <h3 style="font-family: 'Times New Roman', serif; ">Received Charges</h3>
+        </div>
+        <div class="col">
+          <h3 style="font-family:  Tahoma, sans-serif;">{{ resources.received_charge }}</h3>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col">
+          <h3 style="font-family: 'Times New Roman', serif; ">Review</h3>
+        </div>
+        <div class="col">
+          <h3>{{ resources.review }}</h3>
+        </div>
+      </div>
+    </div></div>
+      <style>
+        canvas {
+            border: 1px solid #000;
+            height: 200px;
+            width: 500px;
+        }
+      </style>
+      <input type="hidden" name="task_id" value="{{ tasks.task_id }}">
+      <select name="ratings" id="ratings">
+        <option value="1">1 Star</option>
+        <option value="2">2 Star</option>
+        <option value="3">3 Star</option>
+        <option value="4">4 Star</option>
+        <option value="5">5 Star</option>
+      </select>
+      <canvas id="signatureCanvas"></canvas><br>
+      
+
+      <button id="clearButton">Clear</button>
+      <button id="saveButton">Save</button>
+    
+      <script>
+        var canvas = document.getElementById('signatureCanvas');
+        var signaturePad = new SignaturePad(canvas);
+        
+
+        document.getElementById('clearButton').addEventListener('click', function () {
+            signaturePad.clear();
+        });
+
+        document.getElementById('saveButton').addEventListener('click', function () {
+            if (!signaturePad.isEmpty()) {
+                var signatureData = signaturePad.toDataURL();
+                $.post('/tech/onsite/<task_id>/customerreview', { signature: signatureData }, function (data) {
+                  window.location.href = '/tech/onsite/viewtask/{{ task_id }}';
+                });
+            } else {
+                alert('Please draw your signature before saving.');
+            }
+        });
+    </script>  
+  
+     
+    </div>
+</div>
+
+{% endblock %}

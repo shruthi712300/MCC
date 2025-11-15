@@ -1,0 +1,74 @@
+{% extends "layout.html" %} 
+{% block title %}COM CAR{%endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+<script src="https://kit.fontawesome.com/623b0bceda.js" crossorigin="anonymous"></script>
+{% endblock %} 
+{% block inner_content %}
+
+
+{% include "sidebar_new_technician.html" %}
+
+<div class="page-content p-4" id="content">
+<div class="main-container">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                        <div class="title">
+                            <h4><i class="micon dw dw-settings2 mtext"></i></h4>
+                        </div>
+
+
+    <a href="{{ url_for('tech_customer') }}"><i class="fa fa-chevron-circle-left fa-3x" ></i>
+    </a><br>
+
+  
+    <div class="container-fluid right-content">
+    
+        <div class="table-responsive">
+            <br>
+            <h2 class="h3">Work</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">OS.ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">View</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for task in tasks -%}
+                    <tr>
+                        <td>
+                            {{ task.task_id }}
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ task.date }}</p>
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ task.customer.name }}</p>
+                        </td>
+                        <td>
+                            <p style="text-transform: capitalize;">{{ task.technician.technician_id }}</p>
+                        </td>
+
+
+
+                        <td>
+
+                            <a href="{{ url_for('tech_instore_task_view_by_id', task_id=task.task_id) }}"><button role="button"
+                                    class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#viewtask">View</button></a>
+                        </td>
+                    </tr>
+
+                    {% endfor -%}
+                </tbody>
+            </table>
+
+        </div> 
+
+
+{% endblock %}  
