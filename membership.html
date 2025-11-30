@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaysian Ceylonese Congress - Membership Form</title>
+    
+    <style>
+        /* Your existing CSS remains the same */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .form-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 18px;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+        
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 15px;
+        }
+        
+        .signature-box {
+            flex: 1;
+        }
+        
+        .signature-line {
+            border-bottom: 1px solid #2c3e50;
+            height: 30px;
+            margin-bottom: 5px;
+        }
+        
+        .btn-submit {
+            background-color: #27ae60;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            display: block;
+            margin: 30px auto;
+            width: 250px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-submit:hover {
+            background-color: #219a52;
+        }
+        
+        .btn-back {
+            background-color: #95a5a6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .btn-back:hover {
+            background-color: #7f8c8d;
+        }
+        
+        .message {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+            font-weight: 500;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        @media (max-width: 600px) {
+            .form-group {
+                min-width: 100%;
+            }
+            
+            .signature-section {
+                flex-direction: column;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="btn-back">← Back to Home</a>
+        <h1>MALAYSIAN CEYLONESE CONGRESS - MEMBERSHIP FORM</h1>
+        
+        <div id="message" class="message"></div>
+        
+        <form id="membershipForm">
+            <!-- Your existing form HTML remains the same -->
+            <div class="form-section">
+                <div class="section-title">PERSONAL PARTICULARS</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="full_name">Full Name *</label>
+                        <input type="text" id="full_name" name="full_name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="mykad_no">MyKad No *</label>
+                        <input type="text" id="mykad_no" name="mykad_no" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="home_address">Home Address *</label>
+                        <input type="text" id="home_address" name="home_address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="office_address">Office Address</label>
+                        <input type="text" id="office_address" name="office_address">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone_home">Phone - Home</label>
+                        <input type="tel" id="phone_home" name="phone_home">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone_office">Phone - Office</label>
+                        <input type="tel" id="phone_office" name="phone_office">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hp_no">HP No *</label>
+                        <input type="tel" id="hp_no" name="hp_no" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-mail Address</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="political_party">If currently member of any political party, name of party</label>
+                        <input type="text" id="political_party" name="political_party">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="section-title">MEMBERSHIP APPLIED</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="membership_type">Membership Type *</label>
+                        <select id="membership_type" name="membership_type" required>
+                            <option value="">Select Type</option>
+                            <option value="Associate Member">Associate Member - Not Applicable</option>
+                            <option value="Ordinary Member">Ordinary Member - RM5.00 / year</option>
+                            <option value="Life Member">Life Member - RM100.00</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="section-title">MEMBERSHIP DUES</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="years">Years *</label>
+                        <input type="number" id="years" name="years" min="1" value="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="amount_paid">Amount Paid (RM) *</label>
+                        <input type="number" id="amount_paid" name="amount_paid" step="0.01" required readonly>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="section-title">PROPOSER & SECONDER (Members of the Malaysian Ceylonese Congress in benefit)</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="proposer_name">Proposer Name *</label>
+                        <input type="text" id="proposer_name" name="proposer_name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="proposer_mykad">Proposer MyKad No *</label>
+                        <input type="text" id="proposer_mykad" name="proposer_mykad" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="seconder_name">Seconder Name *</label>
+                        <input type="text" id="seconder_name" name="seconder_name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="seconder_mykad">Seconder MyKad No *</label>
+                        <input type="text" id="seconder_mykad" name="seconder_mykad" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="section-title">DECLARATION</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <p style="font-style: italic; color: #555;">
+                            I hereby declare that the particulars given herewith by me as above are true and accurate and that as a member of the Malaysian Ceylonese Congress I will uphold and abide by the Constitution. Enclosed herewith are my dues as detailed below.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="application_date">Date *</label>
+                        <input type="date" id="application_date" name="application_date" required>
+                    </div>
+                </div>
+                
+                <div class="signature-section">
+                    <div class="signature-box">
+                        <div class="signature-line"></div>
+                        <label>Signature of Applicant</label>
+                    </div>
+                    
+                    <div class="signature-box">
+                        <div class="signature-line"></div>
+                        <label>Proposer Signature</label>
+                    </div>
+                    
+                    <div class="signature-box">
+                        <div class="signature-line"></div>
+                        <label>Seconder Signature</label>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-submit">Submit Application</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('membershipForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Calculate amount based on membership type and years
+            const membershipType = document.getElementById('membership_type').value;
+            const years = document.getElementById('years').value;
+            let amount = 0;
+            
+            if (membershipType === 'Ordinary Member') {
+                amount = 5 * years;
+            } else if (membershipType === 'Life Member') {
+                amount = 100;
+            }
+            
+            document.getElementById('amount_paid').value = amount;
+            
+            // Collect form data
+            const formData = {
+                full_name: document.getElementById('full_name').value,
+                mykad_no: document.getElementById('mykad_no').value,
+                home_address: document.getElementById('home_address').value,
+                office_address: document.getElementById('office_address').value,
+                phone_home: document.getElementById('phone_home').value,
+                phone_office: document.getElementById('phone_office').value,
+                hp_no: document.getElementById('hp_no').value,
+                email: document.getElementById('email').value,
+                political_party: document.getElementById('political_party').value,
+                membership_type: membershipType,
+                years: parseInt(years),
+                amount_paid: amount,
+                proposer_name: document.getElementById('proposer_name').value,
+                proposer_mykad: document.getElementById('proposer_mykad').value,
+                seconder_name: document.getElementById('seconder_name').value,
+                seconder_mykad: document.getElementById('seconder_mykad').value,
+                application_date: document.getElementById('application_date').value
+            };
+            
+            // Show loading state
+            const submitBtn = document.querySelector('.btn-submit');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+            
+            // Send data to PHP backend
+            fetch('api/membership_submit.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const messageDiv = document.getElementById('message');
+                if (data.success) {
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = data.message;
+                    document.getElementById('membershipForm').reset();
+                    document.getElementById('amount_paid').value = '';
+                    // Reset date to today
+                    document.getElementById('application_date').valueAsDate = new Date();
+                } else {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = 'Error: ' + data.message;
+                }
+                messageDiv.style.display = 'block';
+                
+                // Scroll to message
+                messageDiv.scrollIntoView({ behavior: 'smooth' });
+                
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const messageDiv = document.getElementById('message');
+                messageDiv.className = 'message error';
+                messageDiv.textContent = 'An error occurred while submitting the form. Please check your connection and try again.';
+                messageDiv.style.display = 'block';
+            })
+            .finally(() => {
+                // Reset button state
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+        
+        // Auto-calculate amount when membership type or years change
+        document.getElementById('membership_type').addEventListener('change', updateAmount);
+        document.getElementById('years').addEventListener('input', updateAmount);
+        
+        function updateAmount() {
+            const membershipType = document.getElementById('membership_type').value;
+            const years = document.getElementById('years').value;
+            let amount = 0;
+            
+            if (membershipType === 'Ordinary Member') {
+                amount = 5 * years;
+            } else if (membershipType === 'Life Member') {
+                amount = 100;
+                // For life member, set years to 1 and disable the field
+                document.getElementById('years').value = 1;
+                document.getElementById('years').disabled = true;
+            } else {
+                document.getElementById('years').disabled = false;
+            }
+            
+            document.getElementById('amount_paid').value = amount;
+        }
+
+        // Set today's date as default
+        document.getElementById('application_date').valueAsDate = new Date();
+        
+        // Initialize amount calculation
+        updateAmount();
+    </script>
+</body>
+</html>

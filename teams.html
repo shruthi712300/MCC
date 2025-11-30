@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - Malaysian Ceylonese Congress</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .btn-back {
+            background-color: #95a5a6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .btn-back:hover {
+            background-color: #7f8c8d;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .team-member-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .team-member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .member-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 4px solid #3498db;
+        }
+        
+        .member-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .member-position {
+            color: #3498db;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .member-department {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .member-contact {
+            margin: 15px 0;
+            text-align: left;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .contact-item i {
+            width: 20px;
+            margin-right: 10px;
+            color: #3498db;
+        }
+        
+        .member-bio {
+            color: #666;
+            line-height: 1.6;
+            margin-top: 15px;
+            text-align: left;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .department-filter {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .filter-btn {
+            background: #ecf0f1;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .filter-btn:hover {
+            background: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="btn-back">← Back to Home</a>
+        <h1>Our Leadership Team</h1>
+        
+        <div class="department-filter" id="departmentFilter">
+            <button class="filter-btn active" data-department="all">All</button>
+            <!-- Departments will be populated by JavaScript -->
+        </div>
+        
+        <div id="teamContainer">
+            <div class="loading">Loading team members...</div>
+        </div>
+    </div>
+
+    <script>
+        let allTeamMembers = [];
+        let currentFilter = 'all';
+
+        // Fetch team members from backend
+        async function fetchTeamMembers() {
+            try {
+                const response = await fetch('/api/team/members');
+                const data = await response.json();
+                
+                if (data.success) {
+                    allTeamMembers = data.team_members;
+                    displayTeamMembers(allTeamMembers);
+                    populateDepartmentFilter(allTeamMembers);
+                } else {
+                    showError('Failed to load team members: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching team members:', error);
+                showError('Failed to load team members. Please try again later.');
+            }
+        }
+
+        // Display team members in the grid
+        function displayTeamMembers(members) {
+            const container = document.getElementById('teamContainer');
+            
+            if (members.length === 0) {
+                container.innerHTML = '<div class="loading">No team members found.</div>';
+                return;
+            }
+            
+            container.innerHTML = members.map(member => `
+                <div class="team-member-card">
+                    ${member.image_url ? 
+                        `<img src="${member.image_url}" alt="${member.name}" class="member-image">` : 
+                        `<div class="member-image" style="background: #ecf0f1; display: flex; align-items: center; justify-content: center; color: #7f8c8d; font-size: 2em;">👤</div>`
+                    }
+                    <div class="member-name">${member.name}</div>
+                    <div class="member-position">${member.position}</div>
+                    ${member.department ? `<div class="member-department">${member.department}</div>` : ''}
+                    
+                    <div class="member-contact">
+                        ${member.email ? `
+                            <div class="contact-item">
+                                <i>✉️</i>
+                                <a href="mailto:${member.email}">${member.email}</a>
+                            </div>
+                        ` : ''}
+                        
+                        ${member.phone ? `
+                            <div class="contact-item">
+                                <i>📞</i>
+                                <a href="tel:${member.phone}">${member.phone}</a>
+                            </div>
+                        ` : ''}
+                        
+                        ${member.address ? `
+                            <div class="contact-item">
+                                <i>📍</i>
+                                <span>${member.address}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    ${member.bio ? `
+                        <div class="member-bio">${member.bio}</div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Populate department filter buttons
+        function populateDepartmentFilter(members) {
+            const departments = [...new Set(members.map(member => member.department).filter(dept => dept))];
+            const filterContainer = document.getElementById('departmentFilter');
+            
+            if (departments.length > 0) {
+                departments.forEach(dept => {
+                    const button = document.createElement('button');
+                    button.className = 'filter-btn';
+                    button.textContent = dept;
+                    button.setAttribute('data-department', dept);
+                    button.onclick = () => filterByDepartment(dept);
+                    filterContainer.appendChild(button);
+                });
+            }
+        }
+
+        // Filter team members by department
+        function filterByDepartment(department) {
+            currentFilter = department;
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-department') === department) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            const filteredMembers = department === 'all' 
+                ? allTeamMembers 
+                : allTeamMembers.filter(member => member.department === department);
+            
+            displayTeamMembers(filteredMembers);
+        }
+
+        // Show error message
+        function showError(message) {
+            const container = document.getElementById('teamContainer');
+            container.innerHTML = `<div class="error">${message}</div>`;
+        }
+
+        // Auto-refresh team data every 30 seconds to get updates
+        function startAutoRefresh() {
+            setInterval(fetchTeamMembers, 30000);
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchTeamMembers();
+            startAutoRefresh();
+        });
+    </script>
+</body>
+</html>
